@@ -1,8 +1,8 @@
 package runners;
 
 import application_items.Search;
-import utils.HttpClient;
-import utils.Parser;
+import utilities.MyHttpClient;
+import utilities.Parser;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -16,7 +16,7 @@ public class ParserRunner {
         parser.parseGSON();
         parser.parseJackson();
         parser.fromGSON();
-        HttpClient httpClient = new HttpClient();
+        MyHttpClient httpClient = new MyHttpClient();
         Search search = new Search("berta", true);
         httpClient.search(search);
     }

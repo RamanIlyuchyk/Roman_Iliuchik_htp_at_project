@@ -1,4 +1,4 @@
-package utils;
+package utilities;
 
 import application_items.Ingredient;
 import application_items.Recipe;
