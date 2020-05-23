@@ -6,10 +6,11 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import properties.Path;
 import settings.Config;
 import steps.BaseSteps;
-import steps.booking.SpecialSteps;
 import web_driver.Driver;
+import web_pages.booking.MainPage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,19 +23,18 @@ import static org.junit.Assert.assertEquals;
 public class BookingCheckHeadTest {
     WebDriver driver;
     Properties properties;
-    protected static String BOOKING_PATH = "src/test/resources/booking.properties";
     List<WebElement> list;
 
     @Before
     public void preCondition() throws IOException {
         driver = Driver.getWebDriver(Config.CHROME);
-        properties = BaseSteps.getProperties(BOOKING_PATH);
+        properties = BaseSteps.getProperties(Path.BOOKING_PATH);
         list = new ArrayList<>();
     }
 
     @Test
-    public void addToFavoritesTest() throws InterruptedException {
-        SpecialSteps.bookingLogIn(driver, properties);
+    public void CheckHeadTest() throws InterruptedException {
+        MainPage.bookingLogIn(driver, properties);
         TimeUnit.SECONDS.sleep(3);
         addToList("//*[@class='header-wrapper']/img");
         addToList("//*[@data-id='currency_selector']");

@@ -2,6 +2,7 @@ package steps.trashMail;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import properties.Path;
 import steps.BaseSteps;
 import steps.MailSteps;
 
@@ -12,13 +13,11 @@ import java.util.concurrent.TimeUnit;
 
 public class TrashMailNewUser {
     public static boolean firstTime = true;
-    protected static String TRASH_MAIL_PATH = "src/test/resources/trashMail.properties";
-    protected static String BOOKING_PATH = "src/test/resources/booking.properties";
     static String TRASH_MAIL_URL = "https://trashmail.com/";
     static String DOMAIN = "@trashmail.com";
 
     public static void trashMailGetTempMail(WebDriver driver) throws InterruptedException, IOException {
-        Properties prop = BaseSteps.getProperties(TRASH_MAIL_PATH);
+        Properties prop = BaseSteps.getProperties(Path.TRASHMAIL_PATH);
         driver.get(TRASH_MAIL_URL);
         if (firstTime)
             BaseSteps.findElementSendKeys(driver, "//*[@id='fe-mob-forward']", prop.getProperty("EMAIL"));
@@ -40,11 +39,11 @@ public class TrashMailNewUser {
     public static void getNewMail(WebDriver driver) throws IOException {
         String newMail = BaseSteps.findElementGetAttribute(driver, "//*[@id='fe-mob-name']", "value");
         newMail = newMail.concat(DOMAIN);
-        MailSteps.putEmailInProperty(BOOKING_PATH, newMail);
+        MailSteps.putEmailInProperty(Path.BOOKING_PATH, newMail);
     }
 
     public static void trashMailRegistration(WebDriver driver) throws InterruptedException, IOException {
-        Properties prop = BaseSteps.getProperties(TRASH_MAIL_PATH);
+        Properties prop = BaseSteps.getProperties(Path.TRASHMAIL_PATH);
         BaseSteps.findElementClick(driver, "//*[contains(@href,'mob-register')]");
         TimeUnit.SECONDS.sleep(1);
         BaseSteps.findElementSendKeys(driver, "//*[@id='tab-mob-register']/form/div[1]/input", prop.getProperty("LOGIN"));

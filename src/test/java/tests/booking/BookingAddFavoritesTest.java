@@ -6,10 +6,11 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import properties.Path;
 import settings.Config;
 import steps.BaseSteps;
-import steps.booking.SpecialSteps;
 import web_driver.Driver;
+import web_pages.booking.MainPage;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,19 +25,17 @@ public class BookingAddFavoritesTest {
     WebElement element;
     String firstHotel;
     String secondHotel;
-    protected static String BOOKING_PATH = "src/test/resources/booking.properties";
 
     @Before
     public void preCondition() throws IOException {
         driver = Driver.getWebDriver(Config.CHROME);
-        properties = BaseSteps.getProperties(BOOKING_PATH);
+        properties = BaseSteps.getProperties(Path.BOOKING_PATH);
     }
 
     @Test
     public void addToFavoritesTest() throws InterruptedException {
-        SpecialSteps.bookingLogIn(driver, properties);
-        TimeUnit.SECONDS.sleep(3);
-        SpecialSteps.setCityPersonRoomDates(driver, "Madrid", 5, 30, 2, 0, 1);
+        MainPage.bookingLogIn(driver, properties);
+        MainPage.setCityPersonRoomDates(driver, "Madrid", 5, 30, 2, 0, 1);
         TimeUnit.SECONDS.sleep(5);
         setFavoritesCheckColor();
         compareHotelsIndexes(firstHotel, secondHotel);

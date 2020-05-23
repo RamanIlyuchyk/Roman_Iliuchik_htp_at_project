@@ -3,7 +3,6 @@ package steps;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import settings.DriverSettings;
 import settings.ScreenMode;
 
@@ -16,7 +15,6 @@ import static org.junit.Assert.assertEquals;
 
 public class BaseSteps {
     static WebElement element;
-    static Actions actions;
 
     public static Properties getProperties(String path) throws IOException {
         Properties properties = new Properties();
@@ -68,12 +66,6 @@ public class BaseSteps {
         element = driver.findElement(By.xpath(xPath));
         element.click();
         return element.getText();
-    }
-
-    public static void findElementHighlight(WebDriver driver, String xPath) {
-        actions = new Actions(driver);
-        element = driver.findElement(By.xpath(xPath));
-        actions.moveToElement(element).perform();
     }
 
     public static void findElementCheckAttribute(WebDriver driver, String xPath, String attribute, String expected) {
