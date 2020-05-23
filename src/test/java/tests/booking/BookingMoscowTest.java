@@ -10,8 +10,8 @@ import org.openqa.selenium.interactions.Actions;
 import settings.Config;
 import settings.ScreenMode;
 import steps.BaseSteps;
-import steps.booking.SpecialSteps;
 import web_driver.Driver;
+import web_pages.booking.MainPage;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,12 +31,7 @@ public class BookingMoscowTest {
 
     @Test
     public void bookingMoscowTest() throws InterruptedException {
-        BaseSteps.findElementSendKeys(driver, "//*[@id='ss']", "Moscow");
-        BaseSteps.findElementClick(driver, "//*[@data-mode='checkin']");
-        BaseSteps.findElementClick(driver, String.format("//*[@data-date='%s']", SpecialSteps.setDays(daysShift)));
-        BaseSteps.findElementClick(driver, String.format("//*[@data-date='%s']", SpecialSteps.setDays(daysShift + daysAmount)));
-        BaseSteps.findElementClick(driver, "(//*[contains(@type,'submit')])[1]");
-        TimeUnit.SECONDS.sleep(3);
+        MainPage.setCityDates(driver, "Moscow", daysAmount, daysShift);
 
         Actions actions = new Actions(driver);
         WebElement chooseAdults = BaseSteps.findElementByCssSelector(driver, "#group_adults");

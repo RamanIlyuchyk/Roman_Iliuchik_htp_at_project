@@ -3,21 +3,28 @@ package tests.booking;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import settings.Config;
 import settings.ScreenMode;
 import steps.BaseSteps;
-import steps.booking.SpecialSteps;
 import web_driver.Driver;
+import web_pages.booking.HotelsPage;
+import web_pages.booking.MainPage;
 
 import java.util.concurrent.TimeUnit;
 
 public class BookingOsloTest {
     int daysShift = 1;
     int daysAmount = 1;
+    int adultsNeed = 2;
     int childrenNeed = 1;
-    static String BOOKING_URL="https://www.booking.com/";
+    int roomsNeed = 1;
+    static String BOOKING_URL = "https://www.booking.com/";
     WebDriver driver;
+    WebElement element;
 
     @Before
     public void preCondition() {
@@ -27,28 +34,12 @@ public class BookingOsloTest {
 
     @Test
     public void bookingOsloTest() throws InterruptedException {
-        BaseSteps.findElementSendKeys(driver, "//*[@id='ss']", "Oslo");
-        BaseSteps.findElementClick(driver, "//*[@data-mode='checkin']");
-        BaseSteps.findElementClick(driver, String.format("//*[@data-date='%s']", SpecialSteps.setDays(daysShift)));
-        BaseSteps.findElementClick(driver, String.format("//*[@data-date='%s']", SpecialSteps.setDays(daysShift + daysAmount)));
-        BaseSteps.findElementClick(driver, "//*[@id='xp__guests__toggle']");
-        int childrenAmount = Integer.parseInt(BaseSteps.findElementGetAttribute(driver, "//*[contains(@class,'children')]//input", "value"));
-        BaseSteps.findElementClickRepeat(driver, "//*[@aria-describedby='group_children_desc'][2]", childrenAmount, childrenNeed);
-        BaseSteps.findElementClick(driver, "(//*[contains(@type,'submit')])[1]");
-        TimeUnit.SECONDS.sleep(3);
-
+        MainPage.setCityPersonRoomDates(driver, "Oslo", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
         BaseSteps.findElementClick(driver, "//*[@data-id='class-3']");
         BaseSteps.findElementClick(driver, "//*[@data-id='class-4']");
         TimeUnit.SECONDS.sleep(3);
-
-        SpecialSteps.findElementScrollIntoView(driver, "//*[@data-hotelid][10]");
-        TimeUnit.SECONDS.sleep(3); //just to have time to see this action
-        BaseSteps.findElementHighlight(driver, "//*[@data-hotelid][10]//span[contains(@class,'sr-hotel__name')]");
-        TimeUnit.SECONDS.sleep(3); //just to have time to see this action
-        SpecialSteps.findElementSetAttribute(driver, "//*[@data-hotelid][10]", "backgroundColor", "green");
-        TimeUnit.SECONDS.sleep(3); //just to have time to see this action
-        SpecialSteps.findElementSetAttribute(driver, "//*[@data-hotelid][10]//span[contains(@class,'sr-hotel__name')]", "color", "red");
-        TimeUnit.SECONDS.sleep(3); //just to have time to see this action
+        element = driver.findElement(By.xpath("//*[@data-hotelid][10]"));
+        HotelsPage.scrollIntoViewHighlightSetAttribute(element, driver, new Actions(driver));
         BaseSteps.findElementCheckAttribute(driver, "//*[@data-hotelid][10]//span[contains(@class,'sr-hotel__name')]", "style", "color: red;");
     }
 
