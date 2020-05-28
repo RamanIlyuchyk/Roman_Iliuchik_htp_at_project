@@ -33,7 +33,7 @@ public class BookingCheckHeadTest {
     }
 
     @Test
-    public void CheckHeadTest() throws InterruptedException {
+    public void checkHeadTest() throws InterruptedException {
         MainPage.bookingLogIn(driver, properties);
         TimeUnit.SECONDS.sleep(3);
         addToList("//*[@class='header-wrapper']/img");

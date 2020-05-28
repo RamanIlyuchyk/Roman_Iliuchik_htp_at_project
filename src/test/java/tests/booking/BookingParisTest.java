@@ -15,32 +15,30 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertTrue;
 
 public class BookingParisTest {
-    int daysShift = 3;
     int daysAmount = 7;
+    int daysShift = 3;
     int adultsNeed = 4;
-    int childrenNeed = 0;
     int roomsNeed = 2;
-    static String BOOKING_URL = "https://www.booking.com/";
     WebDriver driver;
 
     @Before
     public void preCondition() {
         driver = Driver.getWebDriver(Config.CHROME);
-        BaseSteps.followTheLinkSetWindowMode(driver, BOOKING_URL, ScreenMode.MAXIMIZE);
+        BaseSteps.followTheLinkSetWindowMode(driver, "https://www.booking.com/", ScreenMode.MAXIMIZE);
     }
 
     @Test
-    public void bookingParisTest() throws InterruptedException {
-        MainPage.setCityPersonRoomDates(driver, "Paris", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
-        BaseSteps.findElementClick(driver, "//*[contains(@class,'sort_price')]");
-        BaseSteps.findElementClick(driver, "//*[@data-id='pri-5']");
-        TimeUnit.SECONDS.sleep(3);
-        String budgetPerNight = BaseSteps.findElementGetText(driver, "//*[@data-id='pri-5']").replaceAll("\\D+", "");
-        String minFromMax = BaseSteps.findElementGetText(driver, "(//*[contains(@class,'bui-price-display')]/div[2]/div)[1]").replaceAll("\\D+", "");
-        int hotelPerNight = Integer.parseInt(minFromMax) / daysAmount;
-        System.out.println("Budget per night from " + budgetPerNight);
-        System.out.println("Minimum price per night from " + hotelPerNight);
-        assertTrue("Something wrong", hotelPerNight >= Integer.parseInt(budgetPerNight));
+    public void tripParisTest() throws InterruptedException {
+        MainPage.setCityPersonRoomDates(driver, "Paris", daysAmount, daysShift, adultsNeed, 0, roomsNeed);
+        TimeUnit.SECONDS.sleep(4);
+        BaseSteps.findElementClick(driver, "//*[contains(@class,'sort_price')]/a");
+        BaseSteps.findElementClick(driver, "//*[@id='filter_price']//a[5]");
+        TimeUnit.SECONDS.sleep(2);
+        String maxPrice = BaseSteps.findElementGetText(driver, "//*[@id='filter_price']//a[5]").replaceAll("\\D+", "");
+        String firstPrice = BaseSteps.findElementGetText(driver, "//*[contains(@class,'bui-price-display')]/div[2]/div").replaceAll("\\D+", "");
+        int firstOneDayPrice = Integer.parseInt(firstPrice) / daysAmount;
+        System.out.println("Price: " + maxPrice + "+; Min one Night Price: " + firstOneDayPrice);
+        assertTrue(firstOneDayPrice >= Integer.parseInt(maxPrice));
     }
 
     @After

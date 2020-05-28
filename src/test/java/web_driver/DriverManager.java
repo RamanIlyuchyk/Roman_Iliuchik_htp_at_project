@@ -11,7 +11,7 @@ public class DriverManager {
             case CHROME:
                 return getChromeDriver();
             case FF:
-                return getFirefoxDriver();
+                return new FirefoxDriver();
             default:
                 throw null;
         }
@@ -21,9 +21,5 @@ public class DriverManager {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
         System.setProperty("webdriver.chrome.silentOutput", "true");
         return new ChromeDriver();
-    }
-
-    private static WebDriver getFirefoxDriver() {
-        return new FirefoxDriver();
     }
 }
