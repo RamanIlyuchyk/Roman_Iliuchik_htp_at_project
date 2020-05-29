@@ -1,7 +1,6 @@
 package steps;
 
 import org.openqa.selenium.WebDriver;
-import properties.Path;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,9 +9,11 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class MailSteps {
+    static String YANDEX_PATH = "src/test/resources/yandexMail.properties";
+
     public static void confirmLinkOnYandexMail(String sender, WebDriver driver) throws InterruptedException, IOException {
         driver.get("https://mail.yandex.ru/");
-        Properties prop = BaseSteps.getProperties(Path.YANDEX_PATH);
+        Properties prop = BaseSteps.getProperties(YANDEX_PATH);
         TimeUnit.SECONDS.sleep(2);
         BaseSteps.findElementClick(driver, "//*[contains(@class,'HeadBanner-Button-Enter')]");
         BaseSteps.findElementSendKeys(driver, "//*[@id='passp-field-login']", prop.getProperty("EMAIL"));

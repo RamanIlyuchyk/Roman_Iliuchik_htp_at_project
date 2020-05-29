@@ -3,7 +3,6 @@ package web_pages.trashMail;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import properties.Path;
 import steps.BaseSteps;
 import steps.MailSteps;
 
@@ -43,8 +42,10 @@ public class MainPFPage {
         create.click();
     }
 
+    static String TRASHMAIL_PATH = "src/test/resources/trashMail.properties";
+
     public static void trashmailRegistration(WebDriver driver) throws InterruptedException, IOException {
-        Properties prop = BaseSteps.getProperties(Path.TRASHMAIL_PATH);
+        Properties prop = BaseSteps.getProperties(TRASHMAIL_PATH);
         newUser.click();
         TimeUnit.SECONDS.sleep(1);
         setLogin.sendKeys(prop.getProperty("LOGIN"));

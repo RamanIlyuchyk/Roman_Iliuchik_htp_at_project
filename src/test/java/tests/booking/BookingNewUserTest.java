@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import properties.Path;
 import settings.Config;
 import steps.BaseSteps;
 import steps.MailSteps;
@@ -23,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 public class BookingNewUserTest {
     WebDriver driver;
     Properties properties;
+    static String BOOKING_PATH = "src/test/resources/booking.properties";
 
     @Before
     public void preCondition() throws IOException, InterruptedException {
@@ -33,7 +33,7 @@ public class BookingNewUserTest {
 
     @Test
     public void createNewUserTest() throws InterruptedException, IOException {
-        MainPage.bookingRegistration(driver, properties, Path.BOOKING_PATH);
+        MainPage.bookingRegistration(driver, properties, BOOKING_PATH);
         TimeUnit.SECONDS.sleep(3);
         MailSteps.confirmLinkOnYandexMail("booking.com", driver);
         String currentHandle = driver.getWindowHandle();

@@ -2,7 +2,6 @@ package steps.trashMail;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import properties.Path;
 import steps.BaseSteps;
 import steps.MailSteps;
 import web_pages.trashMail.MainPage;
@@ -13,9 +12,11 @@ import java.util.concurrent.TimeUnit;
 
 public class TrashMailNewUser {
     private static boolean firstTime = true;
+    static String BOOKING_PATH = "src/test/resources/booking.properties";
+    static String TRASHMAIL_PATH = "src/test/resources/trashMail.properties";
 
     public static void trashMailGetNewMail(WebDriver driver) throws InterruptedException, IOException {
-        Properties prop = BaseSteps.getProperties(Path.TRASHMAIL_PATH);
+        Properties prop = BaseSteps.getProperties(TRASHMAIL_PATH);
         driver.get("https://trashmail.com/");
         if (firstTime)
             BaseSteps.findElementSendKeys(driver, "//*[@id='fe-mob-forward']", prop.getProperty("EMAIL"));
@@ -33,6 +34,6 @@ public class TrashMailNewUser {
     private static void getNewMail(WebDriver driver) throws IOException {
         String newMail = BaseSteps.findElementGetAttribute(driver, "//*[@id='fe-mob-name']", "value");
         newMail = newMail.concat("@trashmail.com");
-        MailSteps.putEmailInProperty(newMail, Path.BOOKING_PATH);
+        MailSteps.putEmailInProperty(newMail, BOOKING_PATH);
     }
 }

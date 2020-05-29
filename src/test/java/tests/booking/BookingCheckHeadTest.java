@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import properties.Path;
 import settings.Config;
 import steps.BaseSteps;
 import web_driver.Driver;
@@ -24,11 +23,12 @@ public class BookingCheckHeadTest {
     WebDriver driver;
     Properties properties;
     List<WebElement> list;
+    static String BOOKING_PATH = "src/test/resources/booking.properties";
 
     @Before
     public void preCondition() throws IOException {
         driver = Driver.getWebDriver(Config.CHROME);
-        properties = BaseSteps.getProperties(Path.BOOKING_PATH);
+        properties = BaseSteps.getProperties(BOOKING_PATH);
         list = new ArrayList<>();
     }
 

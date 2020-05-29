@@ -1,7 +1,6 @@
 package web_pages.trashMail;
 
 import org.openqa.selenium.WebDriver;
-import properties.Path;
 import steps.BaseSteps;
 import steps.MailSteps;
 
@@ -10,6 +9,8 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class MainPage {
+    static String TRASHMAIL_PATH = "src/test/resources/trashMail.properties";
+
     public static void generateMail(WebDriver driver) {
         BaseSteps.findElementClick(driver, "//*[@id='fe-mob-fwd-nb']");
         BaseSteps.findElementClick(driver, "//*[@id='fe-mob-fwd-nb']/option[contains(text(),'1')]");
@@ -19,7 +20,7 @@ public class MainPage {
     }
 
     public static void trashmailRegistration(WebDriver driver) throws InterruptedException, IOException {
-        Properties prop = BaseSteps.getProperties(Path.TRASHMAIL_PATH);
+        Properties prop = BaseSteps.getProperties(TRASHMAIL_PATH);
         BaseSteps.findElementClick(driver, "//*[contains(@href,'mob-register')]");
         TimeUnit.SECONDS.sleep(1);
         BaseSteps.findElementSendKeys(driver, "//*[@id='tab-mob-register']/form/div[1]/input", prop.getProperty("LOGIN"));
