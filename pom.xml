@@ -23,10 +23,10 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.21.0</version>
                 <configuration>
-                    <testFailureIgnore>true</testFailureIgnore>
+                    <!--<testFailureIgnore>true</testFailureIgnore>
                     <argLine>
-                        -Dcucumber.options="--plugin ru.yandex.qatools.allure.cucumberjvm.AllureReporter"
-                    </argLine>
+                        -Dcucumber.options="&#45;&#45;plugin ru.yandex.qatools.allure.cucumberjvm.AllureReporter"
+                    </argLine>-->
                     <includes>
                         <include>**/RunTests.java</include>
                     </includes>
@@ -135,11 +135,11 @@
             <artifactId>tag-expressions</artifactId>
             <version>1.1.1</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
             <artifactId>allure-cucumber-jvm-adaptor</artifactId>
             <version>1.6.2</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
