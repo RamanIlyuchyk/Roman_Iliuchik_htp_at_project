@@ -25,6 +25,11 @@ public class BookingAddFavoritesTest {
     Properties properties;
     String firstHotel;
     String secondHotel;
+    int daysAmount = 5;
+    int daysShift = 30;
+    int adultsNeed = 2;
+    int childrenNeed = 0;
+    int roomsNeed = 1;
 
     @Before
     public void preCondition() throws IOException {
@@ -36,7 +41,7 @@ public class BookingAddFavoritesTest {
     public void addToFavoritesTest() throws InterruptedException {
         MainPage.bookingLogIn(driver, properties);
         TimeUnit.SECONDS.sleep(3);
-        MainPage.setCityPersonRoomDates(driver, "Madrid", 5, 30, 2, 0, 1);
+        MainPage.setCityPersonRoomDates(driver, "Madrid", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
         setFavoritesCheckColor();
         compareHotelIndex(firstHotel, secondHotel);
     }

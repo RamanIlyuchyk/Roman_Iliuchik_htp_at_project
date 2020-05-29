@@ -20,6 +20,9 @@ import static org.junit.Assert.assertTrue;
 public class BookingMoscowTest {
     int daysAmount = 5;
     int daysShift = 10;
+    int adultsNeed = 2;
+    int childrenNeed = 0;
+    int roomsNeed = 1;
     WebElement element;
     WebDriver driver;
 
@@ -31,7 +34,7 @@ public class BookingMoscowTest {
 
     @Test
     public void tripMoscowTest() throws InterruptedException {
-        MainPage.setCityPersonRoomDates(driver, "Moscow", daysAmount, daysShift, 2, 0, 1);
+        MainPage.setCityPersonRoomDates(driver, "Moscow", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
         TimeUnit.SECONDS.sleep(3);
         Actions actions = new Actions(driver);
         element = driver.findElement(By.xpath("//*[@id='group_adults']"));
@@ -43,7 +46,7 @@ public class BookingMoscowTest {
         BaseSteps.findElementClick(driver, "//*[contains(@class,'sort_price')]/a");
         element = BaseSteps.findElementClickReturn(driver, "//*[@id='filter_price']//a[1]");
         String maxPrice = element.getText();
-        maxPrice = maxPrice.replaceAll("([^1-9][^0-9]+)", "");
+        maxPrice = maxPrice.substring(maxPrice.indexOf("-")).replaceAll("\\D+", "");
         TimeUnit.SECONDS.sleep(2);
         String firstPrice = BaseSteps.findElementGetText(driver, "//*[contains(@class,'bui-price-display')]/div[2]/div");
         firstPrice = firstPrice.replaceAll("\\D+", "");

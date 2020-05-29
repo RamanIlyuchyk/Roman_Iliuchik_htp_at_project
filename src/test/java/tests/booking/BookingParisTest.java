@@ -18,6 +18,7 @@ public class BookingParisTest {
     int daysAmount = 7;
     int daysShift = 3;
     int adultsNeed = 4;
+    int childrenNeed = 0;
     int roomsNeed = 2;
     WebDriver driver;
 
@@ -29,7 +30,7 @@ public class BookingParisTest {
 
     @Test
     public void tripParisTest() throws InterruptedException {
-        MainPage.setCityPersonRoomDates(driver, "Paris", daysAmount, daysShift, adultsNeed, 0, roomsNeed);
+        MainPage.setCityPersonRoomDates(driver, "Paris", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
         TimeUnit.SECONDS.sleep(4);
         BaseSteps.findElementClick(driver, "//*[contains(@class,'sort_price')]/a");
         BaseSteps.findElementClick(driver, "//*[@id='filter_price']//a[5]");
