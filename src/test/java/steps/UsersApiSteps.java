@@ -13,21 +13,15 @@ public class UsersApiSteps {
     @Given("I start execution")
     public void iStartExecution() {
         LOGGER.error("I start execution");
-        //System.out.println("I start execution");
-        //throw new cucumber.api.PendingException();
     }
 
-    @When("I search user by \"(.*)\" name")
+    @When("I search user by {string} name")
     public void iSearchUserByName(String string) {
-        LOGGER.info("I search user by name");
-        //System.out.println("I search user by name");
-        //throw new cucumber.api.PendingException();
+        LOGGER.info("I search user by {string} name");
     }
 
-    @Then("I verify that I got \"(.*)\"")
+    @Then("I verify that I got {string}")
     public void iVerifyThatIGot(String string) {
-        LOGGER.info("I verify that I got");
-        //System.out.println("I verify that I got");
-        //throw new cucumber.api.PendingException();
+        LOGGER.info("I verify that I got {string}");
     }
 }

@@ -2,13 +2,17 @@ package tests.webService;
 
 import application_items.Search;
 import com.google.gson.Gson;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import steps.BaseSteps;
+import steps.UsersApiSteps;
 import steps.webService.GetDataSteps;
 import utilities.RequiredValues;
 
@@ -27,9 +31,11 @@ public class WebServiceTest {
     static RequiredValues condition;
     static RequiredValues result;
     static String WEB_SERVICE_CONDITIONS = "src/test/resources/webPaths.properties";
+    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
 
     @Before
     public void before() throws IOException {
+        LOGGER.info("Start test");
         gson = new Gson();
         getDataSteps = new GetDataSteps();
         paths = BaseSteps.getProperties(WEB_SERVICE_CONDITIONS);
@@ -37,6 +43,7 @@ public class WebServiceTest {
 
     @org.junit.Before
     public void beforeJunit() throws IOException {
+        LOGGER.info("Start test");
         gson = new Gson();
         getDataSteps = new GetDataSteps();
         paths = BaseSteps.getProperties(WEB_SERVICE_CONDITIONS);
@@ -100,5 +107,15 @@ public class WebServiceTest {
         RequiredValues result = getDataSteps.parseResponseToClass(gson, search);
         RequiredValues condition = getDataSteps.getTestCondition(gson, paths, "FULL_LONG");
         assertEquals(condition.code, result.code);
+    }
+
+    @After
+    public void after() {
+        LOGGER.info("Finish test");
+    }
+
+    @org.junit.After
+    public void afterJunit() {
+        LOGGER.info("Finish test");
     }
 }
