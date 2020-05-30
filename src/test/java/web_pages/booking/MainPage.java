@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import settings.ScreenMode;
 import steps.BaseSteps;
 
 import java.io.IOException;
@@ -31,7 +32,7 @@ public class MainPage {
     }
 
     public static void bookingLogIn(WebDriver driver, Properties properties) throws InterruptedException {
-        driver.get("https://www.booking.com/");
+        BaseSteps.followTheLinkSetWindowMode(driver, "https://www.booking.com/", ScreenMode.MAXIMIZE);
         BaseSteps.findElementClick(driver, "//*[@id='current_account']");
         TimeUnit.SECONDS.sleep(3);
         BaseSteps.findElementSendKeys(driver, "//*[@id='username']", properties.getProperty("NEW_MAIL"));

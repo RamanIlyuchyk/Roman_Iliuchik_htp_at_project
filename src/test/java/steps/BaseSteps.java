@@ -47,6 +47,11 @@ public class BaseSteps {
         return element;
     }
 
+    public static WebElement findElementReturn(WebDriver driver, String xPath) {
+        element = driver.findElement(By.xpath(xPath));
+        return element;
+    }
+
     public static void findElementSendKeys(WebDriver driver, String xPath, String keys) {
         element = driver.findElement(By.xpath(xPath));
         element.sendKeys(keys);
