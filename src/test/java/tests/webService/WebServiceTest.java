@@ -66,7 +66,7 @@ public class WebServiceTest {
 
     @Then("I validate the web service response")
     public void iValidateTheWebServiceResponse() {
-        assertEquals(condition.code, result.code);
+        assertEquals(result.hashCode(), condition.hashCode());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class WebServiceTest {
         Search search = GetDataSteps.getSearchData(gson, 0, paths);
         RequiredValues result = getDataSteps.parseResponseToClass(gson, search);
         RequiredValues condition = getDataSteps.getTestCondition(gson, paths, "ALL_USERS");
-        assertEquals(condition.code, result.code);
+        assertEquals(result.hashCode(), condition.hashCode());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class WebServiceTest {
         Search search = GetDataSteps.getSearchData(gson, 1, paths);
         RequiredValues result = getDataSteps.parseResponseToClass(gson, search);
         RequiredValues condition = getDataSteps.getTestCondition(gson, paths, "PARTIAL_SHORT");
-        assertEquals(condition.code, result.code);
+        assertEquals(result.hashCode(), condition.hashCode());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class WebServiceTest {
         Search search = GetDataSteps.getSearchData(gson, 2, paths);
         RequiredValues result = getDataSteps.parseResponseToClass(gson, search);
         RequiredValues condition = getDataSteps.getTestCondition(gson, paths, "FULL_SHORT");
-        assertEquals(condition.code, result.code);
+        assertEquals(result.hashCode(), condition.hashCode());
     }
 
     @Test
@@ -98,7 +98,7 @@ public class WebServiceTest {
         Search search = GetDataSteps.getSearchData(gson, 3, paths);
         RequiredValues result = getDataSteps.parseResponseToClass(gson, search);
         RequiredValues condition = getDataSteps.getTestCondition(gson, paths, "PARTIAL_LONG");
-        assertEquals(condition.code, result.code);
+        assertEquals(result.hashCode(), condition.hashCode());
     }
 
     @Test
@@ -106,7 +106,7 @@ public class WebServiceTest {
         Search search = GetDataSteps.getSearchData(gson, 4, paths);
         RequiredValues result = getDataSteps.parseResponseToClass(gson, search);
         RequiredValues condition = getDataSteps.getTestCondition(gson, paths, "FULL_LONG");
-        assertEquals(condition.code, result.code);
+        assertEquals(result.hashCode(), condition.hashCode());
     }
 
     @After
