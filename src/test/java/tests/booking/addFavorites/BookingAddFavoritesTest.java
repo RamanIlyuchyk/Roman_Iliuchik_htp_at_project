@@ -4,12 +4,15 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import settings.Config;
 import steps.BaseSteps;
+import steps.UsersApiSteps;
 import web_driver.Driver;
 import web_pages.booking.MainPage;
 
@@ -32,15 +35,18 @@ public class BookingAddFavoritesTest {
     int childrenNeed = 0;
     int roomsNeed = 1;
     static String BOOKING_PATH = "src/test/resources/booking.properties";
+    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
 
     @org.junit.Before
     public void preCondition() throws IOException {
+        LOGGER.info("Start test");
         driver = Driver.getWebDriver(Config.CHROME);
         properties = BaseSteps.getProperties(BOOKING_PATH);
     }
 
     @Before
     public void precondition() throws IOException {
+        LOGGER.info("Start test");
         driver = Driver.getWebDriver(Config.CHROME);
         properties = BaseSteps.getProperties(BOOKING_PATH);
     }
@@ -153,11 +159,13 @@ public class BookingAddFavoritesTest {
 
     @After
     public void postcondition() {
+        LOGGER.info("Finish test");
         BaseSteps.destroy(driver);
     }
 
     @org.junit.After
     public void postCondition() {
+        LOGGER.info("Finish test");
         BaseSteps.destroy(driver);
     }
 }

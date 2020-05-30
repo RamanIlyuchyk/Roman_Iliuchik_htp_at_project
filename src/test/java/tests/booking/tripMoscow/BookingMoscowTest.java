@@ -2,6 +2,8 @@ package tests.booking.tripMoscow;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -13,6 +15,7 @@ import org.openqa.selenium.interactions.Actions;
 import settings.Config;
 import settings.ScreenMode;
 import steps.BaseSteps;
+import steps.UsersApiSteps;
 import web_driver.Driver;
 import web_pages.booking.MainPage;
 
@@ -30,14 +33,17 @@ public class BookingMoscowTest {
     WebElement element;
     static WebDriver driver;
     String maxPrice;
+    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
 
     @BeforeClass
     public static void preCondition() {
+        LOGGER.info("Start test");
         driver = Driver.getWebDriver(Config.CHROME);
     }
 
     @Given("I go to booking.com")
     public void iGoToBookingCom() {
+        LOGGER.info("Start test");
         driver = Driver.getWebDriver(Config.CHROME);
         BaseSteps.followTheLinkSetWindowMode(driver, "https://www.booking.com/", ScreenMode.MAXIMIZE);
     }
@@ -79,6 +85,7 @@ public class BookingMoscowTest {
     public void iCompareHotelSPriceAndPriceInFilters() {
         System.out.println("Price: up to " + maxPrice + "; Min one Night Price: " + firstOneDayPrice);
         assertTrue(firstOneDayPrice <= Integer.parseInt(maxPrice));
+        LOGGER.info("Finish test");
         BaseSteps.destroy(driver);
     }
 
@@ -108,6 +115,7 @@ public class BookingMoscowTest {
 
     @AfterClass
     public static void postCondition() {
+        LOGGER.info("Finish test");
         BaseSteps.destroy(driver);
     }
 }

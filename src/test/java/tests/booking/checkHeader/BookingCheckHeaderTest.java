@@ -4,6 +4,8 @@ import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -12,6 +14,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import settings.Config;
 import steps.BaseSteps;
+import steps.UsersApiSteps;
 import web_driver.Driver;
 import web_pages.booking.MainPage;
 
@@ -28,9 +31,11 @@ public class BookingCheckHeaderTest {
     static Properties properties;
     static List<WebElement> list;
     static String BOOKING_PATH = "src/test/resources/booking.properties";
+    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
 
     @BeforeClass
     public static void preCondition() throws IOException {
+        LOGGER.info("Start test");
         driver = Driver.getWebDriver(Config.CHROME);
         properties = BaseSteps.getProperties(BOOKING_PATH);
         list = new ArrayList<>();
@@ -38,6 +43,7 @@ public class BookingCheckHeaderTest {
 
     @Before
     public void precondition() throws IOException {
+        LOGGER.info("Start test");
         driver = Driver.getWebDriver(Config.CHROME);
         properties = BaseSteps.getProperties(BOOKING_PATH);
         list = new ArrayList<>();
@@ -100,11 +106,13 @@ public class BookingCheckHeaderTest {
 
     @After
     public void postcondition() {
+        LOGGER.info("Finish test");
         BaseSteps.destroy(driver);
     }
 
     @AfterClass
     public static void postCondition() {
+        LOGGER.info("Finish test");
         BaseSteps.destroy(driver);
     }
 }
