@@ -8,8 +8,26 @@
     <artifactId>Roman_Iliuchik_project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.21.0</version>
+                <configuration>
+                    <includes>
+                        <include>**/FakeRunner.java</include>
+                        <include>**/FakeRunner2.java</include>
+                    </includes>
+                    <forkCount>2</forkCount>
+                    <reuseForks>true</reuseForks>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -18,20 +36,20 @@
                     <release>13</release>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.21.0</version>
                 <configuration>
-                    <!--<testFailureIgnore>true</testFailureIgnore>
+                    &lt;!&ndash;<testFailureIgnore>true</testFailureIgnore>
                     <argLine>
                         -Dcucumber.options="&#45;&#45;plugin ru.yandex.qatools.allure.cucumberjvm.AllureReporter"
-                    </argLine>-->
+                    </argLine>&ndash;&gt;
                     <includes>
                         <include>**/RunTests.java</include>
                     </includes>
                 </configuration>
-            </plugin>
+            </plugin>-->
         </plugins>
     </build>
 
@@ -135,11 +153,6 @@
             <artifactId>tag-expressions</artifactId>
             <version>1.1.1</version>
         </dependency>
-        <!--<dependency>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-cucumber-jvm-adaptor</artifactId>
-            <version>1.6.2</version>
-        </dependency>-->
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>

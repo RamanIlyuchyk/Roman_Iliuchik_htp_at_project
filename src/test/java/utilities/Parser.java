@@ -1,8 +1,8 @@
 package utilities;
 
-import application_items.Ingredient;
-import application_items.Recipe;
-import application_items.Search;
+import test_objects.Ingredient;
+import test_objects.Recipe;
+import test_objects.Search;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
@@ -16,7 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Parser {
-    private final static String JSON = "src/test/resources/testData/recipe.json";
+    private final static String JSON = "src/test/resources/test_data/recipe.json";
     File file = new File(JSON);
 
     public void parseJSON() throws IOException {
@@ -43,7 +43,7 @@ public class Parser {
         Gson gson = new Gson();
         Recipe recipe = new Recipe("Borsch", new Ingredient[]{}, "120 minutes");
         System.out.println(gson.toJson(recipe));
-        Files.write(Paths.get("src/test/resources/testData/borsch.json"), gson.toJson(recipe).getBytes());
+        Files.write(Paths.get("src/test/resources/test_data/borsch.json"), gson.toJson(recipe).getBytes());
         System.out.println("Borsch is written to borsch.json");
     }
 

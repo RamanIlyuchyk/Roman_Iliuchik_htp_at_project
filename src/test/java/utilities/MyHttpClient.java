@@ -1,6 +1,6 @@
 package utilities;
 
-import application_items.Search;
+import test_objects.Search;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
