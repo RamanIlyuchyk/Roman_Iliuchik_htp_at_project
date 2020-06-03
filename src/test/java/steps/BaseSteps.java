@@ -67,6 +67,11 @@ public class BaseSteps {
         return driver.findElement(By.xpath(xPath)).getText();
     }
 
+    public static boolean isDisplayed(WebDriver driver, String xPath) {
+        element = driver.findElement(By.xpath(xPath));
+        return element.isDisplayed();
+    }
+
     public static void destroy(WebDriver driver) {
         driver.close();
         driver.quit();
