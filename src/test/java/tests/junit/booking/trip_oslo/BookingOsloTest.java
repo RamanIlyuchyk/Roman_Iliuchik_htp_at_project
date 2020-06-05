@@ -11,12 +11,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import settings.Config;
 import settings.ScreenMode;
-import steps.BaseSteps;
-import steps.UsersApiSteps;
 import web_driver.Driver;
 import web_pages.booking.HotelsPage;
 import web_pages.booking.MainPage;
 
+import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertEquals;
@@ -28,27 +27,26 @@ public class BookingOsloTest {
     int roomsNeed = 1;
     int childrenNeed = 1;
     WebElement element;
-    static WebDriver driver;
-    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
+    private static final Logger LOGGER = LogManager.getLogger(BookingOsloTest.class);
 
     @BeforeClass
-    public static void preCondition() {
+    public static void preCondition() throws MalformedURLException {
         LOGGER.info("Start test");
-        driver = Driver.getWebDriver(Config.CHROME);
+        Driver.initDriver(Config.CHROME);
     }
 
     @Test
     public void tripOsloTest() throws InterruptedException {
-        BaseSteps.followTheLinkSetWindowMode(driver, "https://www.booking.com/", ScreenMode.MAXIMIZE);
-        MainPage.setCityPersonRoomDates(driver, "Oslo", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
+        Driver.followTheLinkSetWindowMode("https://www.booking.com/", ScreenMode.MAXIMIZE);
+        MainPage.setCityPersonRoomDates("Oslo", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
         TimeUnit.SECONDS.sleep(4);
-        BaseSteps.findElementClick(driver, "//*[@data-id='class-3']");
-        BaseSteps.findElementClick(driver, "//*[@data-id='class-4']");
+        Driver.findElementClick("//*[@data-id='class-3']");
+        Driver.findElementClick("//*[@data-id='class-4']");
         TimeUnit.SECONDS.sleep(4);
-        element = driver.findElement(By.xpath("//*[@id='hotellist_inner']/div[11]"));
+        element = Driver.findElementReturn("//*[@id='hotellist_inner']/div[11]");
         TimeUnit.SECONDS.sleep(2);
-        Actions actions = new Actions(driver);
-        element = HotelsPage.executorSetBackgroundTitleColor(element, driver, actions);
+        Actions actions = new Actions(Driver.getWebDriver());
+        element = HotelsPage.executorSetBackgroundTitleColor(element, Driver.getWebDriver(), actions);
         String textColor = element.getAttribute("style");
         if (textColor.equals("color: red;"))
             System.out.println("Red is Red");
@@ -58,6 +56,6 @@ public class BookingOsloTest {
     @AfterClass
     public static void postCondition() {
         LOGGER.info("Finish test");
-        BaseSteps.destroy(driver);
+        Driver.destroy();
     }
 }

@@ -10,8 +10,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import settings.Config;
-import steps.BaseSteps;
-import steps.UsersApiSteps;
 import web_driver.Driver;
 import web_pages.booking.MainPage;
 
@@ -24,7 +22,6 @@ import static org.junit.Assert.assertEquals;
 
 public class BookingAddFavorites {
     WebElement element;
-    WebDriver driver;
     Properties properties;
     String firstHotel;
     String secondHotel;
@@ -33,14 +30,14 @@ public class BookingAddFavorites {
     int adultsNeed = 2;
     int childrenNeed = 0;
     int roomsNeed = 1;
-    static String BOOKING_PATH = "src/test/resources/booking.properties";
-    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
+    static String BOOKING_PATH = "src/test/resources/properties/booking.properties";
+    private static final Logger LOGGER = LogManager.getLogger(BookingAddFavorites.class);
 
     @Before
     public void precondition() throws IOException {
         LOGGER.info("Start test");
-        driver = Driver.getWebDriver(Config.CHROME);
-        properties = BaseSteps.getProperties(BOOKING_PATH);
+        Driver.initDriver(Config.CHROME);
+        properties = Driver.getProperties(BOOKING_PATH);
     }
 
     @Given("I go to booking.com")
@@ -49,22 +46,22 @@ public class BookingAddFavorites {
 
     @Then("I log in")
     public void iLogIn() throws InterruptedException {
-        MainPage.bookingLogIn(driver, properties);
+        MainPage.bookingLogIn(properties);
         TimeUnit.SECONDS.sleep(3);
     }
 
     @Then("I enter data to search")
     public void iEnterDataToSearch() throws InterruptedException {
-        MainPage.setCityPersonRoomDates(driver, "Madrid", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
+        MainPage.setCityPersonRoomDates("Madrid", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
         TimeUnit.SECONDS.sleep(7);
     }
 
     @Then("I click heart button on the first hotel")
     public void iClickHeartButtonOnTheFirstHotel() throws InterruptedException {
-        BaseSteps.findElementClick(driver, "//*[@id='hotellist_inner']/div[1]/div[1]/div/button");
-        element = BaseSteps.findElementReturn(driver, "//*[@id='hotellist_inner']/div[1]/div[1]/div/button");
+        Driver.findElementClick("//*[@id='hotellist_inner']/div[1]/div[1]/div/button");
+        element = Driver.findElementReturn("//*[@id='hotellist_inner']/div[1]/div[1]/div/button");
         firstHotel = element.getAttribute("data-hotel-id");
-        element = driver.findElement(By.xpath("//*[@id='hotellist_inner']/div[1]/div[1]/div/button/*[1]"));
+        element = Driver.findElementReturn("//*[@id='hotellist_inner']/div[1]/div[1]/div/button/*[1]");
         TimeUnit.SECONDS.sleep(3);
     }
 
@@ -75,41 +72,41 @@ public class BookingAddFavorites {
 
     @Then("I go to last page")
     public void iGoToLastPage() throws InterruptedException {
-        BaseSteps.findElementClick(driver, "//*[contains(@class,'bui-pagination__item')][10]");
+        Driver.findElementClick("//*[contains(@class,'bui-pagination__item')][10]");
         TimeUnit.SECONDS.sleep(6);
     }
 
     @Then("I click heart button on the last hotel")
     public void iClickHeartButtonOnTheLastHotel() throws InterruptedException {
-        List<WebElement> list = driver.findElements(By.xpath("//*[@id='hotellist_inner']/div"));
-        BaseSteps.findElementClick(driver, String.format("//*[@id='hotellist_inner']/div[%s]/div[1]/div/button", (list.size() - 1)));
+        List<WebElement> list = Driver.getWebDriver().findElements(By.xpath("//*[@id='hotellist_inner']/div"));
+        Driver.findElementClick(String.format("//*[@id='hotellist_inner']/div[%s]/div[1]/div/button", (list.size() - 1)));
         TimeUnit.SECONDS.sleep(5);
-        element = BaseSteps.findElementReturn(driver, String.format("//*[@id='hotellist_inner']/div[%s]/div[1]/div/button", (list.size() - 1)));
+        element = Driver.findElementReturn(String.format("//*[@id='hotellist_inner']/div[%s]/div[1]/div/button", (list.size() - 1)));
         secondHotel = element.getAttribute("data-hotel-id");
-        element = driver.findElement(By.xpath(String.format("//*[@id='hotellist_inner']/div[%s]/div[1]/div/button/*[1]", (list.size() - 1))));
+        element = Driver.findElementReturn(String.format("//*[@id='hotellist_inner']/div[%s]/div[1]/div/button/*[1]", (list.size() - 1)));
         TimeUnit.SECONDS.sleep(2);
     }
 
     @Then("I go to user page")
     public void iGoToUserPage() throws InterruptedException {
-        BaseSteps.findElementClick(driver, "//*[@id='profile-menu-trigger--content']");
-        BaseSteps.findElementClick(driver, "//*[contains(@class,'mydashboard')]");
+        Driver.findElementClick("//*[@id='profile-menu-trigger--content']");
+        Driver.findElementClick("//*[contains(@class,'mydashboard')]");
         TimeUnit.SECONDS.sleep(3);
     }
 
     @Then("I check hotels id")
     public void iCheckHotelsId() throws InterruptedException {
-        BaseSteps.findElementClick(driver, "//*[contains(@class,'list_item_desc')]");
+        Driver.findElementClick("//*[contains(@class,'list_item_desc')]");
         TimeUnit.SECONDS.sleep(5);
-        element = driver.findElement(By.xpath("//*[contains(@data-index,'0')]/div"));
+        element = Driver.findElementReturn("//*[contains(@data-index,'0')]/div");
         assertEquals(firstHotel, element.getAttribute("data-id"));
-        element = driver.findElement(By.xpath("//*[contains(@data-index,'1')]/div"));
+        element = Driver.findElementReturn("//*[contains(@data-index,'1')]/div");
         assertEquals(secondHotel, element.getAttribute("data-id"));
     }
 
     @After
     public void postcondition() {
         LOGGER.info("Finish test");
-        BaseSteps.destroy(driver);
+        Driver.destroy();
     }
 }

@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         plugin = {"pretty"},
         glue = {"tests.cucumber.booking.check_header"},
-        features = {"src/test/resources/features/BookingCheckHeader.feature"
+        features = {"src/test/resources/features/booking/BookingCheckHeader.feature"
         }
 )
 public class BookingCheckHeaderRunner {

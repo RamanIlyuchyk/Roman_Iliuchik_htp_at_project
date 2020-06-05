@@ -7,10 +7,9 @@ import com.google.gson.Gson;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.junit.Test;
-import steps.BaseSteps;
-import steps.UsersApiSteps;
 import steps.web_service.GetDataSteps;
 import test_objects.RequiredValues;
+import web_driver.Driver;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -22,15 +21,15 @@ public class WebServiceTest {
     static GetDataSteps getDataSteps;
     static Gson gson;
     static Properties paths;
-    static String WEB_SERVICE_CONDITIONS = "src/test/resources/webPaths.properties";
-    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
+    static String WEB_SERVICE_CONDITIONS = "src/test/resources/properties/webPaths.properties";
+    private static final Logger LOGGER = LogManager.getLogger(WebServiceTest.class);
 
     @Before
     public void beforeJunit() throws IOException {
         LOGGER.info("Start test");
         gson = new Gson();
         getDataSteps = new GetDataSteps();
-        paths = BaseSteps.getProperties(WEB_SERVICE_CONDITIONS);
+        paths = Driver.getProperties(WEB_SERVICE_CONDITIONS);
     }
 
     @Test

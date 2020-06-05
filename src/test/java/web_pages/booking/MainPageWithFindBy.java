@@ -4,7 +4,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import steps.BaseSteps;
+import web_driver.Driver;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -53,18 +53,18 @@ public class MainPageWithFindBy {
     @FindBy(xpath = "//*[@id='confirmed_password']")
     private static WebElement confirmPassword;
 
-    public static void setCityPersonRoomDates(WebDriver driver, String city, int daysAmount, int daysShift, int adultsNeed, int childrenNeed, int roomsNeed) {
+    public static void setCityPersonRoomDates(String city, int daysAmount, int daysShift, int adultsNeed, int childrenNeed, int roomsNeed) {
         cityTextBox.sendKeys(Keys.chord(Keys.CONTROL, "a"), city);
         dataBox.click();
-        BaseSteps.findElementClick(driver, String.format("//*[contains(@data-date,'%s')]", setDays(daysShift)));
-        BaseSteps.findElementClick(driver, String.format("//*[contains(@data-date,'%s')]", setDays(daysAmount + daysShift)));
+        Driver.findElementClick(String.format("//*[contains(@data-date,'%s')]", setDays(daysShift)));
+        Driver.findElementClick(String.format("//*[contains(@data-date,'%s')]", setDays(daysAmount + daysShift)));
         personsRoomsBox.click();
         int adultAmount = Integer.parseInt(adultInput.getAttribute("value"));
-        BaseSteps.findElementClickRepeat(driver, "//*[contains(@aria-describedby,'adult')][contains(@class,'add')]", adultAmount, adultsNeed);
+        Driver.findElementClickRepeat("//*[contains(@aria-describedby,'adult')][contains(@class,'add')]", adultAmount, adultsNeed);
         int roomAmount = Integer.parseInt(roomsInput.getAttribute("value"));
-        BaseSteps.findElementClickRepeat(driver, "//*[contains(@aria-describedby,'no_rooms_desc')][contains(@class,'add')]", roomAmount, roomsNeed);
+        Driver.findElementClickRepeat("//*[contains(@aria-describedby,'no_rooms_desc')][contains(@class,'add')]", roomAmount, roomsNeed);
         int childAmount = Integer.parseInt(childInput.getAttribute("value"));
-        BaseSteps.findElementClickRepeat(driver, "//*[contains(@aria-describedby,'group_children_desc')][contains(@class,'add')]", childAmount, childrenNeed);
+        Driver.findElementClickRepeat("//*[contains(@aria-describedby,'group_children_desc')][contains(@class,'add')]", childAmount, childrenNeed);
         submitSearch.click();
     }
 
@@ -79,8 +79,8 @@ public class MainPageWithFindBy {
         submit.click();
     }
 
-    public static void bookingRegistration(WebDriver driver, Properties properties, String BOOKING_PATH) throws InterruptedException, IOException {
-        properties = BaseSteps.getProperties(BOOKING_PATH);
+    public static void bookingRegistration(Properties properties, String BOOKING_PATH) throws InterruptedException, IOException {
+        properties = Driver.getProperties(BOOKING_PATH);
         createAccount.click();
         TimeUnit.SECONDS.sleep(1);
         enterLogin.sendKeys(properties.getProperty("NEW_MAIL"));

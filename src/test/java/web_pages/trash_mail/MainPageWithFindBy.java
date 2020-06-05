@@ -3,8 +3,8 @@ package web_pages.trash_mail;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import steps.BaseSteps;
-import steps.MailSteps;
+import steps.trashmail_yandex.MailSteps;
+import web_driver.Driver;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -34,6 +34,8 @@ public class MainPageWithFindBy {
     @FindBy(xpath = "//*[contains(@href,'trashmail')]")
     private static WebElement confirmButton;
 
+    static String TRASHMAIL_PATH = "src/test/resources/properties/trashMail.properties";
+
     public static void generateMail(WebDriver driver) {
         forwards.click();
         setForwards.click();
@@ -42,10 +44,8 @@ public class MainPageWithFindBy {
         create.click();
     }
 
-    static String TRASHMAIL_PATH = "src/test/resources/trashMail.properties";
-
     public static void trashmailRegistration(WebDriver driver) throws InterruptedException, IOException {
-        Properties prop = BaseSteps.getProperties(TRASHMAIL_PATH);
+        Properties prop = Driver.getProperties(TRASHMAIL_PATH);
         newUser.click();
         TimeUnit.SECONDS.sleep(1);
         setLogin.sendKeys(prop.getProperty("LOGIN"));
@@ -53,7 +53,7 @@ public class MainPageWithFindBy {
         setPasswordAgain.sendKeys(prop.getProperty("PASSWORD"));
         register.click();
         TimeUnit.SECONDS.sleep(7);
-        MailSteps.confirmLinkOnYandexMail("TrashMail", driver);
+        MailSteps.confirmLinkOnYandexMail("TrashMail");
         confirmButton.click();
         TimeUnit.SECONDS.sleep(7);
     }

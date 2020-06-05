@@ -1,10 +1,10 @@
-package steps.fake;
+package tests.fake;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.junit.Assert;
-import web_driver.TempDriver;
+import web_driver.Driver;
 
 import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class FakeGuiSteps {
     @Given(value = "I go to tut.by")
     public void checkHeaderTest() throws MalformedURLException {
-        TempDriver.getDriver().get("https://tut.by");
+        Driver.getFakeDriver().get("https://tut.by");
     }
 
     @When("I start waiting")

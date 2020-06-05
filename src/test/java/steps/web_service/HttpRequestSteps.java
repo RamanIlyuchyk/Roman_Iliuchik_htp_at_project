@@ -11,14 +11,13 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import steps.UsersApiSteps;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class HttpRequestSteps {
     private static final String URL = "http://178.124.206.46:8001/app/ws/";
-    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
+    private static final Logger LOGGER = LogManager.getLogger(HttpRequestSteps.class);
 
     public static String getHttpResponse(Gson gson, Search search) throws IOException, URISyntaxException {
         LOGGER.debug("Send predicate on the web service");

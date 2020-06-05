@@ -1,11 +1,11 @@
-package steps.fake;
+package tests.fake;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import settings.TempConfig;
-import web_driver.TempDriver;
+import settings.Config;
+import web_driver.Driver;
 
 import java.net.MalformedURLException;
 
@@ -15,12 +15,12 @@ public class FakeBaseSteps {
     @Before
     public void beforeTest() throws MalformedURLException {
         LOGGER.info("Initializing WebDriver..");
-        TempDriver.initDriver(TempConfig.CHROME);
+        Driver.initDriver(Config.CHROME);
     }
 
     @After
     public void afterTest() {
         LOGGER.info("Killing WebDriver..");
-        TempDriver.destroy();
+        Driver.destroy();
     }
 }

@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import steps.UsersApiSteps;
 import test_objects.RequiredValues;
 
 import java.io.FileNotFoundException;
@@ -15,7 +14,7 @@ import java.net.URISyntaxException;
 import java.util.Properties;
 
 public class GetDataSteps {
-    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
+    private static final Logger LOGGER = LogManager.getLogger(GetDataSteps.class);
 
     public static Search getSearchData(Gson gson, int condition, Properties paths) throws FileNotFoundException {
         LOGGER.debug("Parsing predicate to .json");

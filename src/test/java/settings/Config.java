@@ -1,5 +1,5 @@
 package settings;
 
 public enum Config {
-    CHROME, FF
+    CHROME, FF, REMOTE
 }

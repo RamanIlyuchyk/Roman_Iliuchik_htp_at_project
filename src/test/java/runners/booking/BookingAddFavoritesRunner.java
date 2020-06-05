@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         plugin = {"pretty"},
         glue = {"tests.cucumber.booking.add_favorites"},
-        features = {"src/test/resources/features/BookingAddFavorites.feature"
+        features = {"src/test/resources/features/booking/BookingAddFavorites.feature"
         }
 )
 public class BookingAddFavoritesRunner {

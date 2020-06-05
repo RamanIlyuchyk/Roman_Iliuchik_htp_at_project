@@ -7,12 +7,11 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import steps.UsersApiSteps;
 
 import java.util.concurrent.TimeUnit;
 
 public class HotelsPage {
-    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
+    private static final Logger LOGGER = LogManager.getLogger(HotelsPage.class);
 
     public static WebElement executorSetBackgroundTitleColor(WebElement element, WebDriver driver, Actions actions) throws InterruptedException {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true)", element);

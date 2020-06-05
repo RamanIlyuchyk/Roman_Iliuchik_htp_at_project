@@ -5,14 +5,12 @@ import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 import settings.Config;
 import settings.ScreenMode;
-import steps.BaseSteps;
-import steps.UsersApiSteps;
 import web_driver.Driver;
 import web_pages.booking.MainPage;
 
+import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
@@ -23,25 +21,24 @@ public class BookingParisTest {
     int adultsNeed = 4;
     int childrenNeed = 0;
     int roomsNeed = 2;
-    static WebDriver driver;
-    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
+    private static final Logger LOGGER = LogManager.getLogger(BookingParisTest.class);
 
     @BeforeClass
-    public static void preCondition() {
+    public static void preCondition() throws MalformedURLException {
         LOGGER.info("Start test");
-        driver = Driver.getWebDriver(Config.CHROME);
+        Driver.initDriver(Config.CHROME);
     }
 
     @Test
     public void tripParisTest() throws InterruptedException {
-        BaseSteps.followTheLinkSetWindowMode(driver, "https://www.booking.com/", ScreenMode.MAXIMIZE);
-        MainPage.setCityPersonRoomDates(driver, "Paris", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
+        Driver.followTheLinkSetWindowMode("https://www.booking.com/", ScreenMode.MAXIMIZE);
+        MainPage.setCityPersonRoomDates("Paris", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
         TimeUnit.SECONDS.sleep(4);
-        BaseSteps.findElementClick(driver, "//*[contains(@class,'sort_price')]/a");
-        BaseSteps.findElementClick(driver, "//*[@id='filter_price']//a[5]");
+        Driver.findElementClick("//*[contains(@class,'sort_price')]/a");
+        Driver.findElementClick("//*[@id='filter_price']//a[5]");
         TimeUnit.SECONDS.sleep(2);
-        String maxPrice = BaseSteps.findElementGetText(driver, "//*[@id='filter_price']//a[5]").replaceAll("\\D+", "");
-        String firstPrice = BaseSteps.findElementGetText(driver, "//*[contains(@class,'bui-price-display')]/div[2]/div").replaceAll("\\D+", "");
+        String maxPrice = Driver.findElementGetText("//*[@id='filter_price']//a[5]").replaceAll("\\D+", "");
+        String firstPrice = Driver.findElementGetText("//*[contains(@class,'bui-price-display')]/div[2]/div").replaceAll("\\D+", "");
         int firstOneDayPrice = Integer.parseInt(firstPrice) / daysAmount;
         System.out.println("Price: " + maxPrice + "+; Min one Night Price: " + firstOneDayPrice);
         assertTrue(firstOneDayPrice >= Integer.parseInt(maxPrice));
@@ -50,6 +47,6 @@ public class BookingParisTest {
     @AfterClass
     public static void postCondition() {
         LOGGER.info("Finish test");
-        BaseSteps.destroy(driver);
+        Driver.destroy();
     }
 }

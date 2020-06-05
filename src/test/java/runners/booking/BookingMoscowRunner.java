@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         plugin = {"pretty"},
         glue = {"tests.cucumber.booking.trip_moscow"},
-        features = {"src/test/resources/features/BookingMoscow.feature"
+        features = {"src/test/resources/features/booking/BookingMoscow.feature"
         }
 )
 public class BookingMoscowRunner {

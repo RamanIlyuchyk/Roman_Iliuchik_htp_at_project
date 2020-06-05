@@ -10,8 +10,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import settings.Config;
-import steps.BaseSteps;
-import steps.UsersApiSteps;
 import web_driver.Driver;
 import web_pages.booking.MainPage;
 
@@ -24,17 +22,16 @@ import java.util.concurrent.TimeUnit;
 import static org.junit.Assert.assertEquals;
 
 public class BookingCheckHeader {
-    static WebDriver driver;
     static Properties properties;
     static List<WebElement> list;
-    static String BOOKING_PATH = "src/test/resources/booking.properties";
-    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
+    static String BOOKING_PATH = "src/test/resources/properties/booking.properties";
+    private static final Logger LOGGER = LogManager.getLogger(BookingCheckHeader.class);
 
     @Before
     public void precondition() throws IOException {
         LOGGER.info("Start test");
-        driver = Driver.getWebDriver(Config.CHROME);
-        properties = BaseSteps.getProperties(BOOKING_PATH);
+        Driver.initDriver(Config.CHROME);
+        properties = Driver.getProperties(BOOKING_PATH);
         list = new ArrayList<>();
     }
 
@@ -45,7 +42,7 @@ public class BookingCheckHeader {
 
     @Then("I log in")
     public void iLogIn() throws InterruptedException {
-        MainPage.bookingLogIn(driver, properties);
+        MainPage.bookingLogIn(properties);
         TimeUnit.SECONDS.sleep(3);
     }
 
@@ -66,7 +63,7 @@ public class BookingCheckHeader {
     }
 
     public void addToList(String xPath) {
-        list.add(driver.findElement(By.xpath(xPath)));
+        list.add(Driver.getWebDriver().findElement(By.xpath(xPath)));
     }
 
     @Then("I check the number of items found")
@@ -77,6 +74,6 @@ public class BookingCheckHeader {
     @After
     public void postcondition() {
         LOGGER.info("Finish test");
-        BaseSteps.destroy(driver);
+        Driver.destroy();
     }
 }

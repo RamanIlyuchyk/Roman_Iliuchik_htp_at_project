@@ -4,11 +4,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import settings.ScreenMode;
-import steps.BaseSteps;
-import steps.UsersApiSteps;
+import web_driver.Driver;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -18,53 +15,53 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class MainPage {
-    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
+    private static final Logger LOGGER = LogManager.getLogger(MainPage.class);
 
-    public static void setCityPersonRoomDates(WebDriver driver, String city, int daysAmount, int daysShift, int adultsNeed, int childrenNeed, int roomsNeed) {
-        LOGGER.debug("Adding search parameters: " + city + ", " + "on " + daysAmount + "days after " + daysShift
+    public static void setCityPersonRoomDates(String city, int daysAmount, int daysShift, int adultsNeed, int childrenNeed, int roomsNeed) {
+        LOGGER.debug("Adding search parameters: " + city + ", " + "on " + daysAmount + " days after " + daysShift
                 + " days for " + adultsNeed + " adults, " + childrenNeed + " children in " + roomsNeed + " rooms");
-        WebElement element = driver.findElement(By.xpath("//*[@id='ss']"));
+        WebElement element = Driver.getWebDriver().findElement(By.xpath("//*[@id='ss']"));
         element.sendKeys(Keys.chord(Keys.CONTROL, "a"), city);
-        BaseSteps.findElementClick(driver, "//*[contains(@class,'xp__input-group xp__date-time')]");
-        BaseSteps.findElementClick(driver, String.format("//*[contains(@data-date,'%s')]", setDays(daysShift)));
-        BaseSteps.findElementClick(driver, String.format("//*[contains(@data-date,'%s')]", setDays(daysAmount + daysShift)));
-        BaseSteps.findElementClick(driver, "//*[@id='xp__guests__toggle']");
-        int adultAmount = Integer.parseInt(BaseSteps.findElementGetAttribute(driver, "//*[contains(@class,'field-adult')]//input", "value"));
-        BaseSteps.findElementClickRepeat(driver, "//*[contains(@aria-describedby,'adult')][contains(@class,'add')]", adultAmount, adultsNeed);
-        int roomAmount = Integer.parseInt(BaseSteps.findElementGetAttribute(driver, "//*[contains(@class,'field-rooms')]//input", "value"));
-        BaseSteps.findElementClickRepeat(driver, "//*[contains(@aria-describedby,'no_rooms_desc')][contains(@class,'add')]", roomAmount, roomsNeed);
-        int childAmount = Integer.parseInt(BaseSteps.findElementGetAttribute(driver, "//*[@id='group_children']", "value"));
-        BaseSteps.findElementClickRepeat(driver, "//*[contains(@aria-describedby,'group_children_desc')][contains(@class,'add')]", childAmount, childrenNeed);
-        BaseSteps.findElementClick(driver, "//*[contains(@type,'submit')]");
+        Driver.findElementClick("//*[contains(@class,'xp__input-group xp__date-time')]");
+        Driver.findElementClick(String.format("//*[contains(@data-date,'%s')]", setDays(daysShift)));
+        Driver.findElementClick(String.format("//*[contains(@data-date,'%s')]", setDays(daysAmount + daysShift)));
+        Driver.findElementClick("//*[@id='xp__guests__toggle']");
+        int adultAmount = Integer.parseInt(Driver.findElementGetAttribute("//*[contains(@class,'field-adult')]//input", "value"));
+        Driver.findElementClickRepeat("//*[contains(@aria-describedby,'adult')][contains(@class,'add')]", adultAmount, adultsNeed);
+        int roomAmount = Integer.parseInt(Driver.findElementGetAttribute("//*[contains(@class,'field-rooms')]//input", "value"));
+        Driver.findElementClickRepeat("//*[contains(@aria-describedby,'no_rooms_desc')][contains(@class,'add')]", roomAmount, roomsNeed);
+        int childAmount = Integer.parseInt(Driver.findElementGetAttribute("//*[@id='group_children']", "value"));
+        Driver.findElementClickRepeat("//*[contains(@aria-describedby,'group_children_desc')][contains(@class,'add')]", childAmount, childrenNeed);
+        Driver.findElementClick("//*[contains(@type,'submit')]");
     }
 
-    public static void bookingLogIn(WebDriver driver, Properties properties) throws InterruptedException {
+    public static void bookingLogIn(Properties properties) throws InterruptedException {
         LOGGER.debug("Log in on booking.com");
-        BaseSteps.followTheLinkSetWindowMode(driver, "https://www.booking.com/", ScreenMode.MAXIMIZE);
-        BaseSteps.findElementClick(driver, "//*[@id='current_account']");
+        Driver.getWebDriver().get("https://www.booking.com/");
+        Driver.findElementClick("//*[@id='current_account']");
         TimeUnit.SECONDS.sleep(3);
-        BaseSteps.findElementSendKeys(driver, "//*[@id='username']", properties.getProperty("NEW_MAIL"));
+        Driver.findElementSendKeys("//*[@id='username']", properties.getProperty("NEW_MAIL"));
         LOGGER.debug("Printing email");
-        BaseSteps.findElementClick(driver, "//*[@type='submit']");
+        Driver.findElementClick("//*[@type='submit']");
         TimeUnit.SECONDS.sleep(1);
-        BaseSteps.findElementSendKeys(driver, "//*[@id='password']", properties.getProperty("PASSWORD"));
+        Driver.findElementSendKeys("//*[@id='password']", properties.getProperty("PASSWORD"));
         LOGGER.debug("Printing password");
-        BaseSteps.findElementClick(driver, "//*[@type='submit']");
+        Driver.findElementClick("//*[@type='submit']");
     }
 
-    public static void bookingRegistration(WebDriver driver, Properties properties, String BOOKING_PATH) throws InterruptedException, IOException {
+    public static void bookingRegistration(Properties properties, String BOOKING_PATH) throws InterruptedException, IOException {
         LOGGER.debug("Booking.com registration");
-        properties = BaseSteps.getProperties(BOOKING_PATH);
-        BaseSteps.findElementClick(driver, "//*[@id='current_account_create']");
+        properties = Driver.getProperties(BOOKING_PATH);
+        Driver.findElementClick("//*[@id='current_account_create']");
         TimeUnit.SECONDS.sleep(1);
-        BaseSteps.findElementSendKeys(driver, "//*[@id='login_name_register']", properties.getProperty("NEW_MAIL"));
+        Driver.findElementSendKeys("//*[@id='login_name_register']", properties.getProperty("NEW_MAIL"));
         LOGGER.debug("Printing email");
-        BaseSteps.findElementClick(driver, "//*[contains(@class,'nw-register')]/button");
+        Driver.findElementClick("//*[contains(@class,'nw-register')]/button");
         TimeUnit.SECONDS.sleep(1);
-        BaseSteps.findElementSendKeys(driver, "//*[@id='password']", properties.getProperty("PASSWORD"));
-        BaseSteps.findElementSendKeys(driver, "//*[@id='confirmed_password']", properties.getProperty("PASSWORD"));
+        Driver.findElementSendKeys("//*[@id='password']", properties.getProperty("PASSWORD"));
+        Driver.findElementSendKeys("//*[@id='confirmed_password']", properties.getProperty("PASSWORD"));
         LOGGER.debug("Printing password twice");
-        BaseSteps.findElementClick(driver, "//*[contains(@type,'submit')]");
+        Driver.findElementClick("//*[contains(@type,'submit')]");
     }
 
     public static String setDays(int daysAmount) {

@@ -9,11 +9,10 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import steps.BaseSteps;
-import steps.UsersApiSteps;
 import steps.web_service.GetDataSteps;
 import test_objects.RequiredValues;
 import test_objects.Search;
+import web_driver.Driver;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,15 +28,15 @@ public class WebService {
     static Search search;
     static RequiredValues condition;
     static RequiredValues result;
-    static String WEB_SERVICE_CONDITIONS = "src/test/resources/webPaths.properties";
-    private static final Logger LOGGER = LogManager.getLogger(UsersApiSteps.class);
+    static String WEB_SERVICE_CONDITIONS = "src/test/resources/properties/webPaths.properties";
+    private static final Logger LOGGER = LogManager.getLogger(WebService.class);
 
     @Before
     public void before() throws IOException {
         LOGGER.info("Start test");
         gson = new Gson();
         getDataSteps = new GetDataSteps();
-        paths = BaseSteps.getProperties(WEB_SERVICE_CONDITIONS);
+        paths = Driver.getProperties(WEB_SERVICE_CONDITIONS);
     }
 
     @Given("I start finding by {int} predicate")
