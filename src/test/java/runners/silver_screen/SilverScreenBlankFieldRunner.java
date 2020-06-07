@@ -9,7 +9,7 @@ import web_driver.Driver;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         plugin = {"pretty"},
-        glue = {"tests.cucumber.silver_screen.blank_field"},
+        glue = {"steps.cucumber.silver_screen.blank_field"},
         features = {"src/test/resources/features/silver_screen/SilverScreenBlankField.feature"
         }
 )

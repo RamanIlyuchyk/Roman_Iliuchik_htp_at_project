@@ -1,6 +1,5 @@
-package tests.cucumber.silver_screen.login;
+package steps.cucumber.silver_screen.blank_field;
 
-import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -14,16 +13,15 @@ import web_pages.silver_screen.SilverScreenPage;
 
 import java.io.IOException;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 
-public class SilverScreenLogin {
+public class SilverScreenBlankField {
     Properties prop;
     SilverScreenPage silverScreenPage;
     static String SILVER_SCREEN_PATH = "src/test/resources/properties/silverScreen.properties";
     static String SILVER_SCREEN_URL = "https://silverscreen.by";
-    private static final Logger LOGGER = LogManager.getLogger(SilverScreenLogin.class);
+    private static final Logger LOGGER = LogManager.getLogger(SilverScreenBlankField.class);
 
     @Before
     public void preCondition() throws IOException {
@@ -38,22 +36,23 @@ public class SilverScreenLogin {
         LOGGER.info("I opened an app");
     }
 
-    @When("I login with <login> and <password>")
-    public void iLogin() throws InterruptedException {
-        silverScreenPage.signIn(prop.getProperty("EMAIL"), prop.getProperty("PASSWORD"));
-        LOGGER.info("I signed in with login and password");
+    @When("^I left blank (.*) field$")
+    public void iLeftBlankField(String field) throws InterruptedException {
+        switch (field) {
+            case ("login"):
+                silverScreenPage.blankEmail(prop.getProperty("FAKE_PASSWORD"));
+                LOGGER.info("I left blank login field");
+                break;
+            case ("password"):
+                silverScreenPage.blankPassword(prop.getProperty("FAKE_EMAIL"));
+                LOGGER.info("I left blank login field");
+                break;
+        }
     }
 
-    @Then("I can see Red Carpet Club <level> in upper right corner")
-    public void iCanSeeRedCarpetClubLevelInUpperRightCorner() throws InterruptedException {
-        assertTrue("Red Carpet Club level is not displayed", silverScreenPage.isLevelDisplayed());
-        LOGGER.info("I made sure that Red Carpet Club level in upper right corner was shown");
-        TimeUnit.SECONDS.sleep(2);
-        silverScreenPage.signOut();
-    }
-
-    @After
-    public void postCondition() {
-        Driver.destroy();
+    @Then("^I see (.*) message$")
+    public void iSeeMessage(String message) {
+        assertTrue("This message isn't expected", silverScreenPage.isBannerAboutMistakeDisplayed(message));
+        LOGGER.info("I made sure that a recommendation message was shown");
     }
 }

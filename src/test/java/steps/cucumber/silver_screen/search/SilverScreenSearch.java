@@ -1,7 +1,8 @@
-package tests.cucumber.silver_screen.unregistered;
+package steps.cucumber.silver_screen.search;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -18,12 +19,12 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 
-public class SilverScreenUnregistered {
+public class SilverScreenSearch {
     Properties prop;
     SilverScreenPage silverScreenPage;
     static String SILVER_SCREEN_PATH = "src/test/resources/properties/silverScreen.properties";
     static String SILVER_SCREEN_URL = "https://silverscreen.by";
-    private static final Logger LOGGER = LogManager.getLogger(SilverScreenUnregistered.class);
+    private static final Logger LOGGER = LogManager.getLogger(SilverScreenSearch.class);
 
     @Before
     public void preCondition() throws IOException {
@@ -38,21 +39,27 @@ public class SilverScreenUnregistered {
         LOGGER.info("I opened an app");
     }
 
-    @When("I login as unregistered user")
-    public void iLogin() throws InterruptedException {
-        silverScreenPage.signIn(prop.getProperty("FAKE_EMAIL"), prop.getProperty("FAKE_PASSWORD"));
-        LOGGER.info("I signed in as unregistered user");
+    @When("I search for <search word> word")
+    public void iSearchForWord() {
+        silverScreenPage.findMovie(prop.getProperty("SEARCH_WORD"));
+        LOGGER.info("I searched for word");
     }
 
-    @Then("I see validation message")
-    public void iSeeValidationMessage() throws InterruptedException {
-        assertTrue("No warning message", silverScreenPage.isBannerForUnregisteredDisplayed());
-        LOGGER.info("I made sure that the user was not found");
-        TimeUnit.SECONDS.sleep(2);
+    @Then("I see the list of movie items")
+    public void iSeeTheListOfMovieItems() throws InterruptedException {
+        silverScreenPage.seeListOfMovies();
+        LOGGER.info("I saw the list of movie items");
+        TimeUnit.SECONDS.sleep(3);
+    }
+
+    @And("each item name or description contains <search word>")
+    public void eachItemNameOrDescriptionContainsWord() {
+        assertTrue(silverScreenPage.checkSearchWord(prop.getProperty("SEARCH_WORD")));
+        LOGGER.info("I made sure that each item name or description contains search word");
     }
 
     @After
-    public void postCondition() {
+    public static void postCondition() {
         Driver.destroy();
     }
 }

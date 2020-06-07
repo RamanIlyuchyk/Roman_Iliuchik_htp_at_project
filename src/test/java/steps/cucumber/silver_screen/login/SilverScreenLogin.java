@@ -1,8 +1,7 @@
-package tests.cucumber.silver_screen.search;
+package steps.cucumber.silver_screen.login;
 
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -19,12 +18,12 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 
-public class SilverScreenSearch {
+public class SilverScreenLogin {
     Properties prop;
     SilverScreenPage silverScreenPage;
     static String SILVER_SCREEN_PATH = "src/test/resources/properties/silverScreen.properties";
     static String SILVER_SCREEN_URL = "https://silverscreen.by";
-    private static final Logger LOGGER = LogManager.getLogger(SilverScreenSearch.class);
+    private static final Logger LOGGER = LogManager.getLogger(SilverScreenLogin.class);
 
     @Before
     public void preCondition() throws IOException {
@@ -39,27 +38,22 @@ public class SilverScreenSearch {
         LOGGER.info("I opened an app");
     }
 
-    @When("I search for <search word> word")
-    public void iSearchForWord() {
-        silverScreenPage.findMovie(prop.getProperty("SEARCH_WORD"));
-        LOGGER.info("I searched for word");
+    @When("I login with <login> and <password>")
+    public void iLogin() throws InterruptedException {
+        silverScreenPage.signIn(prop.getProperty("EMAIL"), prop.getProperty("PASSWORD"));
+        LOGGER.info("I signed in with login and password");
     }
 
-    @Then("I see the list of movie items")
-    public void iSeeTheListOfMovieItems() throws InterruptedException {
-        silverScreenPage.seeListOfMovies();
-        LOGGER.info("I saw the list of movie items");
-        TimeUnit.SECONDS.sleep(3);
-    }
-
-    @And("each item name or description contains <search word>")
-    public void eachItemNameOrDescriptionContainsWord() {
-        assertTrue(silverScreenPage.checkSearchWord(prop.getProperty("SEARCH_WORD")));
-        LOGGER.info("I made sure that each item name or description contains search word");
+    @Then("I can see Red Carpet Club <level> in upper right corner")
+    public void iCanSeeRedCarpetClubLevelInUpperRightCorner() throws InterruptedException {
+        assertTrue("Red Carpet Club level is not displayed", silverScreenPage.isLevelDisplayed());
+        LOGGER.info("I made sure that Red Carpet Club level in upper right corner was shown");
+        TimeUnit.SECONDS.sleep(2);
+        silverScreenPage.signOut();
     }
 
     @After
-    public static void postCondition() {
+    public void postCondition() {
         Driver.destroy();
     }
 }
