@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         plugin = {"pretty"},
-        glue = {"tests.cucumber.booking.add_favorites"},
+        glue = {"steps.cucumber.booking.add_favorites"},
         features = {"src/test/resources/features/booking/BookingAddFavorites.feature"
         }
 )

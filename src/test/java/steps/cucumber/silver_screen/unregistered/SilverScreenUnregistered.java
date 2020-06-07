@@ -1,5 +1,6 @@
-package tests.cucumber.silver_screen.blank_field;
+package steps.cucumber.silver_screen.unregistered;
 
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -13,15 +14,16 @@ import web_pages.silver_screen.SilverScreenPage;
 
 import java.io.IOException;
 import java.util.Properties;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
 
-public class SilverScreenBlankField {
+public class SilverScreenUnregistered {
     Properties prop;
     SilverScreenPage silverScreenPage;
     static String SILVER_SCREEN_PATH = "src/test/resources/properties/silverScreen.properties";
     static String SILVER_SCREEN_URL = "https://silverscreen.by";
-    private static final Logger LOGGER = LogManager.getLogger(SilverScreenBlankField.class);
+    private static final Logger LOGGER = LogManager.getLogger(SilverScreenUnregistered.class);
 
     @Before
     public void preCondition() throws IOException {
@@ -36,23 +38,21 @@ public class SilverScreenBlankField {
         LOGGER.info("I opened an app");
     }
 
-    @When("^I left blank (.*) field$")
-    public void iLeftBlankField(String field) throws InterruptedException {
-        switch (field) {
-            case ("login"):
-                silverScreenPage.blankEmail(prop.getProperty("FAKE_PASSWORD"));
-                LOGGER.info("I left blank login field");
-                break;
-            case ("password"):
-                silverScreenPage.blankPassword(prop.getProperty("FAKE_EMAIL"));
-                LOGGER.info("I left blank login field");
-                break;
-        }
+    @When("I login as unregistered user")
+    public void iLogin() throws InterruptedException {
+        silverScreenPage.signIn(prop.getProperty("FAKE_EMAIL"), prop.getProperty("FAKE_PASSWORD"));
+        LOGGER.info("I signed in as unregistered user");
     }
 
-    @Then("^I see (.*) message$")
-    public void iSeeMessage(String message) {
-        assertTrue("This message isn't expected", silverScreenPage.isBannerAboutMistakeDisplayed(message));
-        LOGGER.info("I made sure that a recommendation message was shown");
+    @Then("I see validation message")
+    public void iSeeValidationMessage() throws InterruptedException {
+        assertTrue("No warning message", silverScreenPage.isBannerForUnregisteredDisplayed());
+        LOGGER.info("I made sure that the user was not found");
+        TimeUnit.SECONDS.sleep(2);
+    }
+
+    @After
+    public void postCondition() {
+        Driver.destroy();
     }
 }

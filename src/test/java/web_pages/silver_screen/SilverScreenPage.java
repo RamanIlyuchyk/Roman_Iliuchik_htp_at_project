@@ -46,9 +46,9 @@ public class SilverScreenPage {
     private WebElement bannerForUnregistered;
 
     protected Actions action;
-    private static final String TITLES = "//*[@poster]/../div/a/span";
-    private static final String TITLE_NAME = "(//*[@poster]/../div/a/span)[%s]";
-    private static final String BANNER_FOR_BLANK_FIELD = "//div[contains(text(),'%s')]";
+    private static final String TITLES_XPATH = "//*[@poster]/../div/a/span";
+    private static final String TITLE_NAME_XPATH = "(//*[@poster]/../div/a/span)[%s]";
+    private static final String BANNER_FOR_BLANK_FIELD_XPATH = "//div[contains(text(),'%s')]";
 
     public SilverScreenPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -90,7 +90,7 @@ public class SilverScreenPage {
     }
 
     public boolean isBannerAboutMistakeDisplayed(String field) {
-        return Driver.getWebDriver().findElement(By.xpath(String.format(BANNER_FOR_BLANK_FIELD, field))).isDisplayed();
+        return Driver.getWebDriver().findElement(By.xpath(String.format(BANNER_FOR_BLANK_FIELD_XPATH, field))).isDisplayed();
     }
 
     public void findMovie(String searchWord) {
@@ -105,11 +105,11 @@ public class SilverScreenPage {
     public boolean checkSearchWord(String searchWord) {
         Matcher matcher;
         Pattern pattern = Pattern.compile(searchWord.toLowerCase());
-        List<WebElement> titles = Driver.getWebDriver().findElements(By.xpath(TITLES));
+        List<WebElement> titles = Driver.getWebDriver().findElements(By.xpath(TITLES_XPATH));
         for (int i = 0; i < titles.size(); i++) {
-            matcher = pattern.matcher(Driver.findElementGetText(String.format(TITLE_NAME, (i + 1))).toLowerCase());
+            matcher = pattern.matcher(Driver.findElementGetText(String.format(TITLE_NAME_XPATH, (i + 1))).toLowerCase());
             if (!matcher.find()) {
-                Driver.findElementClick(String.format(TITLE_NAME, i + 1));
+                Driver.findElementClick(String.format(TITLE_NAME_XPATH, i + 1));
                 matcher = pattern.matcher(description.getText().toLowerCase());
                 if (!matcher.find()) {
                     return false;

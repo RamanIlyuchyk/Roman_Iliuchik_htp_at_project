@@ -1,4 +1,4 @@
-package tests.cucumber.booking.trip_oslo;
+package steps.cucumber.booking.trip_oslo;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;

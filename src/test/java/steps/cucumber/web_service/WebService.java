@@ -1,4 +1,4 @@
-package tests.cucumber.web_service;
+package steps.cucumber.web_service;
 
 import com.google.gson.Gson;
 import cucumber.api.java.After;
