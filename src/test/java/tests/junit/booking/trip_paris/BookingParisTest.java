@@ -40,7 +40,8 @@ public class BookingParisTest {
         String maxPrice = Driver.findElementGetText("//*[@id='filter_price']//a[5]").replaceAll("\\D+", "");
         String firstPrice = Driver.findElementGetText("//*[contains(@class,'bui-price-display')]/div[2]/div").replaceAll("\\D+", "");
         int firstOneDayPrice = Integer.parseInt(firstPrice) / daysAmount;
-        System.out.println("Price: " + maxPrice + "+; Min one Night Price: " + firstOneDayPrice);
+        System.out.println("Price: " + maxPrice + "+");
+        System.out.println("Min one night price: " + firstOneDayPrice);
         assertTrue(firstOneDayPrice >= Integer.parseInt(maxPrice));
     }
 

@@ -53,7 +53,8 @@ public class BookingMoscowTest {
         String firstPrice = Driver.findElementGetText("//*[contains(@class,'bui-price-display')]/div[2]/div");
         firstPrice = firstPrice.replaceAll("\\D+", "");
         int firstOneDayPrice = Integer.parseInt(firstPrice) / (daysAmount);
-        System.out.println("Price: up to " + maxPrice + "; Min one Night Price: " + firstOneDayPrice);
+        System.out.println("Price: up to " + maxPrice);
+        System.out.println("Min one night price: " + firstOneDayPrice);
         assertTrue(firstOneDayPrice <= Integer.parseInt(maxPrice));
     }
 

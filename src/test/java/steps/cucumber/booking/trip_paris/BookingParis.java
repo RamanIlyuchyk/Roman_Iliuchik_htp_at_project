@@ -54,7 +54,8 @@ public class BookingParis {
 
     @And("I compare hotel's price and price in filters")
     public void iCompareHotelSPriceAndPriceInFilters() {
-        System.out.println("Price: " + maxPrice + "+; Min one Night Price: " + firstOneDayPrice);
+        System.out.println("Price: " + maxPrice + "+");
+        System.out.println("Min one night price: " + firstOneDayPrice);
         assertTrue(firstOneDayPrice >= Integer.parseInt(maxPrice));
         LOGGER.info("Finish test");
         Driver.destroy();

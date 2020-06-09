@@ -46,7 +46,7 @@ public class BookingOsloTest {
         element = MainPage.executorSetBackgroundTitleColor(element, Driver.getWebDriver(), actions);
         String textColor = element.getAttribute("style");
         if (textColor.equals("color: red;"))
-            System.out.println("Red is Red");
+            System.out.println("Red is really red");
         assertEquals("color: red;", textColor);
     }
 

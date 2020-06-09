@@ -63,7 +63,7 @@ public class MailSteps {
     }
 
     public static void putEmailInProperty(String newMail, String propertyPath) throws IOException {
-        LOGGER.debug("Put new trash email in property");
+        LOGGER.debug("Put new trash email in properties");
         Properties prop = Driver.getProperties(propertyPath);
         OutputStream out = new FileOutputStream(propertyPath);
         prop.put("NEW_MAIL", newMail);

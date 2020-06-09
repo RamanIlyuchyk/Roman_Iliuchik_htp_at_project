@@ -61,7 +61,7 @@ public class BookingOslo {
     public void iCheckThatTheTextColorIsRed() {
         String textColor = element.getAttribute("style");
         if (textColor.equals("color: red;"))
-            System.out.println("Red is Red");
+            System.out.println("Red is really red");
         assertEquals("color: red;", textColor);
         LOGGER.info("Finish test");
         Driver.destroy();

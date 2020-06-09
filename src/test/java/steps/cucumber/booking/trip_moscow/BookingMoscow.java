@@ -70,7 +70,8 @@ public class BookingMoscow {
 
     @Then("I compare hotel's price and price in filters")
     public void iCompareHotelSPriceAndPriceInFilters() {
-        System.out.println("Price: up to " + maxPrice + "; Min one Night Price: " + firstOneDayPrice);
+        System.out.println("Price: up to " + maxPrice);
+        System.out.println("Min one night price: " + firstOneDayPrice);
         assertTrue(firstOneDayPrice <= Integer.parseInt(maxPrice));
         LOGGER.info("Finish test");
         Driver.destroy();
