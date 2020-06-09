@@ -25,7 +25,7 @@ public class BookingAddFavorites {
     String firstHotel;
     String secondHotel;
     int daysAmount = 5;
-    int daysShift = 25;
+    int daysShift = 30;
     int adultsNeed = 2;
     int childrenNeed = 0;
     int roomsNeed = 1;

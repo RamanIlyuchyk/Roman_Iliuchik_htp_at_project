@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import settings.Config;
 import web_driver.Driver;
@@ -21,12 +20,11 @@ import static org.junit.Assert.assertEquals;
 
 public class BookingAddFavoritesTest {
     WebElement element;
-    WebDriver driver;
     Properties properties;
     String firstHotel;
     String secondHotel;
     int daysAmount = 5;
-    int daysShift = 25;
+    int daysShift = 30;
     int adultsNeed = 2;
     int childrenNeed = 0;
     int roomsNeed = 1;

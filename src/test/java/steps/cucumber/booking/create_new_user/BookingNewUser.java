@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import settings.Config;
 import steps.trashmail_yandex.MailSteps;
-import steps.trashmail_yandex.TrashMailNewUser;
 import web_driver.Driver;
 import web_pages.booking.MainPage;
 
@@ -38,7 +37,7 @@ public class BookingNewUser {
 
     @Then("I get new trash mail")
     public void iGetNewTrashMail() throws IOException, InterruptedException {
-        TrashMailNewUser.trashMailGetNewMail();
+        MailSteps.trashMailGetNewMail();
     }
 
     @Then("I go to booking.com")

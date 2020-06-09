@@ -5,14 +5,11 @@ import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import settings.Config;
 import settings.ScreenMode;
 import web_driver.Driver;
-import web_pages.booking.HotelsPage;
 import web_pages.booking.MainPage;
 
 import java.net.MalformedURLException;
@@ -46,7 +43,7 @@ public class BookingOsloTest {
         element = Driver.findElementReturn("//*[@id='hotellist_inner']/div[11]");
         TimeUnit.SECONDS.sleep(2);
         Actions actions = new Actions(Driver.getWebDriver());
-        element = HotelsPage.executorSetBackgroundTitleColor(element, Driver.getWebDriver(), actions);
+        element = MainPage.executorSetBackgroundTitleColor(element, Driver.getWebDriver(), actions);
         String textColor = element.getAttribute("style");
         if (textColor.equals("color: red;"))
             System.out.println("Red is Red");

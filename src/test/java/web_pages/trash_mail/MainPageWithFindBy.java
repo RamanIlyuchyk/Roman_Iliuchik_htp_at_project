@@ -2,7 +2,9 @@ package web_pages.trash_mail;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import steps.trashmail_yandex.MailSteps;
 import web_driver.Driver;
 
@@ -35,6 +37,12 @@ public class MainPageWithFindBy {
     private static WebElement confirmButton;
 
     static String TRASHMAIL_PATH = "src/test/resources/properties/trashMail.properties";
+    protected Actions action;
+
+    public MainPageWithFindBy(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.action = new Actions(driver);
+    }
 
     public static void generateMail(WebDriver driver) {
         forwards.click();

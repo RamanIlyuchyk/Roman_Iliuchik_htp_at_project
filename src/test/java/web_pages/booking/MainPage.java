@@ -2,9 +2,8 @@ package web_pages.booking;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import web_driver.Driver;
 
 import java.io.IOException;
@@ -33,6 +32,23 @@ public class MainPage {
         int childAmount = Integer.parseInt(Driver.findElementGetAttribute("//*[@id='group_children']", "value"));
         Driver.findElementClickRepeat("//*[contains(@aria-describedby,'group_children_desc')][contains(@class,'add')]", childAmount, childrenNeed);
         Driver.findElementClick("//*[contains(@type,'submit')]");
+    }
+
+    public static WebElement executorSetBackgroundTitleColor(WebElement element, WebDriver driver, Actions actions) throws InterruptedException {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true)", element);
+        TimeUnit.SECONDS.sleep(3);
+        actions.moveToElement(driver.findElement(By.xpath("//*[@id='hotellist_inner']/div[11]/div[2]/div/div/div[2]/a"))).build().perform();
+        LOGGER.debug("Finding 10th hotel on page");
+        TimeUnit.SECONDS.sleep(3);
+        element = driver.findElement(By.xpath("//*[@id='hotellist_inner']/div[11]"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].style.backgroundColor='green'", element);
+        LOGGER.debug("Changing background color to green");
+        TimeUnit.SECONDS.sleep(3);
+        element = driver.findElement(By.xpath("//*[@id='hotellist_inner']/div[11]/div[2]/div/div/div/h3/a"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].style.color='red'", element);
+        LOGGER.debug("Changing text color to red");
+        TimeUnit.SECONDS.sleep(3);
+        return element;
     }
 
     public static void bookingLogIn(Properties properties) throws InterruptedException {

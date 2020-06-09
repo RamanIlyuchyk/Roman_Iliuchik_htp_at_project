@@ -9,7 +9,6 @@ import org.openqa.selenium.interactions.Actions;
 import settings.Config;
 import settings.ScreenMode;
 import web_driver.Driver;
-import web_pages.booking.HotelsPage;
 import web_pages.booking.MainPage;
 
 import java.net.MalformedURLException;
@@ -55,7 +54,7 @@ public class BookingOslo {
     @Then("I'm changing background and text color")
     public void iMChangingBackgroundAndTextColor() throws InterruptedException {
         Actions actions = new Actions(Driver.getWebDriver());
-        element = HotelsPage.executorSetBackgroundTitleColor(element, Driver.getWebDriver(), actions);
+        element = MainPage.executorSetBackgroundTitleColor(element, Driver.getWebDriver(), actions);
     }
 
     @Then("I check that the text color is red")

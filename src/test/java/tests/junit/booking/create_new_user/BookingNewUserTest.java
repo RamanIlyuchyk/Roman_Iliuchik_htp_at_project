@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import settings.Config;
 import steps.trashmail_yandex.MailSteps;
-import steps.trashmail_yandex.TrashMailNewUser;
 import web_driver.Driver;
 import web_pages.booking.MainPage;
 
@@ -28,7 +27,7 @@ public class BookingNewUserTest {
     public void preCondition() throws IOException, InterruptedException {
         LOGGER.info("Start test");
         Driver.initDriver(Config.CHROME);
-        TrashMailNewUser.trashMailGetNewMail();
+        MailSteps.trashMailGetNewMail();
         Driver.openUrl("https://www.booking.com/");
     }
 

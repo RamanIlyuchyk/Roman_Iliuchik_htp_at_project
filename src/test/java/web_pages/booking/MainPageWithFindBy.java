@@ -3,7 +3,9 @@ package web_pages.booking;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import web_driver.Driver;
 
 import java.io.IOException;
@@ -52,6 +54,13 @@ public class MainPageWithFindBy {
     private static WebElement enterPassword;
     @FindBy(xpath = "//*[@id='confirmed_password']")
     private static WebElement confirmPassword;
+
+    protected Actions action;
+
+    public MainPageWithFindBy(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+        this.action = new Actions(driver);
+    }
 
     public static void setCityPersonRoomDates(String city, int daysAmount, int daysShift, int adultsNeed, int childrenNeed, int roomsNeed) {
         cityTextBox.sendKeys(Keys.chord(Keys.CONTROL, "a"), city);
