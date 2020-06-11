@@ -3,6 +3,7 @@ package web_driver;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import settings.Config;
@@ -106,5 +107,10 @@ public class Driver {
     public static void destroy() {
         webDriver.get().close();
         webDriver.get().quit();
+    }
+
+    public static void clearCookies() {
+        webDriver.get().get("chrome://settings/clearBrowserData");
+        webDriver.get().findElement(By.xpath("//settings-ui")).sendKeys(Keys.ENTER);
     }
 }

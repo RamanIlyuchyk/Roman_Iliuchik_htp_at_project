@@ -2,8 +2,8 @@ package tests.junit.booking.trip_oslo;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -26,10 +26,11 @@ public class BookingOsloTest {
     WebElement element;
     private static final Logger LOGGER = LogManager.getLogger(BookingOsloTest.class);
 
-    @BeforeClass
-    public static void preCondition() throws MalformedURLException {
+    @Before
+    public void preCondition() throws MalformedURLException {
         LOGGER.info("Start test");
         Driver.initDriver(Config.CHROME);
+        Driver.clearCookies();
     }
 
     @Test
@@ -50,9 +51,9 @@ public class BookingOsloTest {
         assertEquals("color: red;", textColor);
     }
 
-    @AfterClass
-    public static void postCondition() {
+    @After
+    public void postCondition() {
         LOGGER.info("Finish test");
-        Driver.destroy();
+        //Driver.destroy();
     }
 }

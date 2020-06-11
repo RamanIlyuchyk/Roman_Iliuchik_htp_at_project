@@ -2,8 +2,8 @@ package tests.junit.booking.trip_moscow;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
@@ -27,10 +27,11 @@ public class BookingMoscowTest {
     WebElement element;
     private static final Logger LOGGER = LogManager.getLogger(BookingMoscowTest.class);
 
-    @BeforeClass
-    public static void preCondition() throws MalformedURLException {
+    @Before
+    public void preCondition() throws MalformedURLException {
         LOGGER.info("Start test");
         Driver.initDriver(Config.CHROME);
+        Driver.clearCookies();
     }
 
     @Test
@@ -58,9 +59,9 @@ public class BookingMoscowTest {
         assertTrue(firstOneDayPrice <= Integer.parseInt(maxPrice));
     }
 
-    @AfterClass
-    public static void postCondition() {
+    @After
+    public void postCondition() {
         LOGGER.info("Finish test");
-        Driver.destroy();
+        //Driver.destroy();
     }
 }

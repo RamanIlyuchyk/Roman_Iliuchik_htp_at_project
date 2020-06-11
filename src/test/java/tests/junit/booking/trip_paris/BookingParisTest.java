@@ -2,8 +2,8 @@ package tests.junit.booking.trip_paris;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import settings.Config;
 import settings.ScreenMode;
@@ -23,10 +23,11 @@ public class BookingParisTest {
     int roomsNeed = 2;
     private static final Logger LOGGER = LogManager.getLogger(BookingParisTest.class);
 
-    @BeforeClass
-    public static void preCondition() throws MalformedURLException {
+    @Before
+    public void preCondition() throws MalformedURLException {
         LOGGER.info("Start test");
         Driver.initDriver(Config.CHROME);
+        Driver.clearCookies();
     }
 
     @Test
@@ -45,9 +46,9 @@ public class BookingParisTest {
         assertTrue(firstOneDayPrice >= Integer.parseInt(maxPrice));
     }
 
-    @AfterClass
-    public static void postCondition() {
+    @After
+    public void postCondition() {
         LOGGER.info("Finish test");
-        Driver.destroy();
+        //Driver.destroy();
     }
 }
