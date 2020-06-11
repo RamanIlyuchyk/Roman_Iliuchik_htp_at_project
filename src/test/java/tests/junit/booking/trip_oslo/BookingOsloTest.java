@@ -5,25 +5,22 @@ import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import settings.Config;
 import settings.ScreenMode;
 import web_driver.Driver;
-import web_pages.booking.MainPage;
+import web_pages.booking.BookingPage;
 
 import java.net.MalformedURLException;
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.assertEquals;
 
 public class BookingOsloTest {
+    BookingPage bookingPage;
+    Actions actions;
     int daysAmount = 1;
     int daysShift = 1;
     int adultsNeed = 2;
     int roomsNeed = 1;
     int childrenNeed = 1;
-    WebElement element;
     private static final Logger LOGGER = LogManager.getLogger(BookingOsloTest.class);
 
     @Before
@@ -31,24 +28,16 @@ public class BookingOsloTest {
         LOGGER.info("Start test");
         Driver.initDriver(Config.CHROME);
         Driver.clearCookies();
+        bookingPage = new BookingPage(Driver.getWebDriver());
+        actions = new Actions(Driver.getWebDriver());
     }
 
     @Test
     public void tripOsloTest() throws InterruptedException {
         Driver.followTheLinkSetWindowMode("https://www.booking.com/", ScreenMode.MAXIMIZE);
-        MainPage.setCityPersonRoomDates("Oslo", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
-        TimeUnit.SECONDS.sleep(4);
-        Driver.findElementClick("//*[@data-id='class-3']");
-        Driver.findElementClick("//*[@data-id='class-4']");
-        TimeUnit.SECONDS.sleep(4);
-        element = Driver.findElementReturn("//*[@id='hotellist_inner']/div[11]");
-        TimeUnit.SECONDS.sleep(2);
-        Actions actions = new Actions(Driver.getWebDriver());
-        element = MainPage.executorSetBackgroundTitleColor(element, Driver.getWebDriver(), actions);
-        String textColor = element.getAttribute("style");
-        if (textColor.equals("color: red;"))
-            System.out.println("Red is really red");
-        assertEquals("color: red;", textColor);
+        bookingPage.setDataForSearch("Oslo", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
+        bookingPage.sortForOslo();
+        bookingPage.actionsForOslo();
     }
 
     @After

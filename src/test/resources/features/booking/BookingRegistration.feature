@@ -6,7 +6,7 @@ Then I get new trash mail
 And I go to booking.com
 Then I create new user
 And I go to yandex.ru
-And I confirm email
-Then I again go to booking.com
-Then I go to user page
-And I check the lack of a banner
+Then I confirm email
+And I again go to booking.com
+Then I go to my dashboard
+And I check lack of banner

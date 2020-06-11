@@ -8,55 +8,41 @@ import org.apache.log4j.Logger;
 import settings.Config;
 import settings.ScreenMode;
 import web_driver.Driver;
-import web_pages.booking.MainPage;
+import web_pages.booking.BookingPage;
 
 import java.net.MalformedURLException;
-import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.assertTrue;
 
 public class BookingParis {
+    BookingPage bookingPage;
     int daysAmount = 7;
     int daysShift = 3;
     int adultsNeed = 4;
     int childrenNeed = 0;
     int roomsNeed = 2;
-    String maxPrice;
-    int firstOneDayPrice;
     private static final Logger LOGGER = LogManager.getLogger(BookingParis.class);
 
     @Given("I go to booking.com")
     public void iGoToBookingCom() throws MalformedURLException {
         LOGGER.info("Start test");
         Driver.initDriver(Config.CHROME);
+        Driver.clearCookies();
+        bookingPage = new BookingPage(Driver.getWebDriver());
         Driver.followTheLinkSetWindowMode("https://www.booking.com/", ScreenMode.MAXIMIZE);
     }
 
-    @Then("I enter data to search")
-    public void iEnterDataToSearch() throws InterruptedException {
-        MainPage.setCityPersonRoomDates("Paris", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
-        TimeUnit.SECONDS.sleep(4);
+    @Then("I set data for search")
+    public void iSetDataForSearch() throws InterruptedException {
+        bookingPage.setDataForSearch("Paris", daysAmount, daysShift, adultsNeed, childrenNeed, roomsNeed);
     }
 
-    @Then("I filter hotels at the maximum price")
-    public void iFilterHotelsAtTheMaximumPrice() throws InterruptedException {
-        Driver.findElementClick("//*[contains(@class,'sort_price')]/a");
-        Driver.findElementClick("//*[@id='filter_price']//a[5]");
-        TimeUnit.SECONDS.sleep(2);
+    @And("I sort hotels by ascending with max budget")
+    public void iSortHotelsByAscendingWithMaxBudget() throws InterruptedException {
+        bookingPage.sortForParis();
     }
 
-    @And("I'm looking hotel with minimum price")
-    public void iMLookingHotelWithMinimumPrice() {
-        maxPrice = Driver.findElementGetText("//*[@id='filter_price']//a[5]").replaceAll("\\D+", "");
-        String firstPrice = Driver.findElementGetText("//*[contains(@class,'bui-price-display')]/div[2]/div").replaceAll("\\D+", "");
-        firstOneDayPrice = Integer.parseInt(firstPrice) / daysAmount;
-    }
-
-    @And("I compare hotel's price and price in filters")
-    public void iCompareHotelSPriceAndPriceInFilters() {
-        System.out.println("Price: " + maxPrice + "+");
-        System.out.println("Min one night price: " + firstOneDayPrice);
-        assertTrue(firstOneDayPrice >= Integer.parseInt(maxPrice));
+    @And("I compare price of hotel and price in filters")
+    public void iComparePriceOfHotelAndPriceInFilters() {
+        bookingPage.assertForParis(daysAmount);
         LOGGER.info("Finish test");
         Driver.destroy();
     }

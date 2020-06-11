@@ -54,7 +54,7 @@ public class SilverScreenSearch {
 
     @And("each item name or description contains <search word>")
     public void eachItemNameOrDescriptionContainsWord() {
-        assertTrue(silverScreenPage.checkSearchWord(prop.getProperty("SEARCH_WORD")));
+        assertTrue(silverScreenPage.checkWordInEachNameAndDescription(prop.getProperty("SEARCH_WORD")));
         LOGGER.info("I made sure that each item name or description contains search word");
     }
 

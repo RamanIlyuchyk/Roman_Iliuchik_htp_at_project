@@ -1,13 +1,8 @@
-Feature: Add to Favorites
-Scenario: Add 2 Hotels to the Favorites, check color of the heart button
+Feature: Add to wish list
+Scenario: Add 2 hotels to wish list and check wish list
 
 Given I go to booking.com
-Then I log in
-Then I enter data to search
-And I click heart button on the first hotel
-And I check heart button color
-Then I go to last page
-And I click heart button on the last hotel
-And I check heart button color
-Then I go to user page
-And I check hotels id
+Then I sing in
+And I set properties for search
+And I add two hotels to wish list and check color
+And I check wish list

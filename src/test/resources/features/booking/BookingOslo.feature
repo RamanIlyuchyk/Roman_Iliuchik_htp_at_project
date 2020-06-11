@@ -1,9 +1,7 @@
 Feature: Finding hotels in Oslo
-Scenario: Finding hotel in Oslo and changing color
+Scenario: Finding hotels in Oslo and setting colors
 
 Given I go to booking.com
-Then I enter data to search
-And I find hotels with 3 and 4 stars
-Then I find hotel №10 in list
-And I'm changing background and text color
-And I check that the text color is red
+Then I set data for search
+And I choose three star and four star hotels
+And I set and check colors

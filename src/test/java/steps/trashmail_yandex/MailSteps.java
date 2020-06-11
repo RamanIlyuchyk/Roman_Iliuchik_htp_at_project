@@ -17,6 +17,9 @@ public class MailSteps {
     static String BOOKING_PATH = "src/test/resources/properties/booking.properties";
     static String TRASHMAIL_PATH = "src/test/resources/properties/trashMail.properties";
     static String YANDEX_PATH = "src/test/resources/properties/yandexMail.properties";
+
+    private static final String CURRENT_ACCOUNT = "//*[contains(@id,'current_account')]";
+
     private static final Logger LOGGER = LogManager.getLogger(MailSteps.class);
 
     public static void trashMailGetNewMail() throws InterruptedException, IOException {

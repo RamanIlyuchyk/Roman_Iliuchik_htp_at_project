@@ -102,9 +102,9 @@ public class SilverScreenPage {
         searchField.sendKeys(Keys.ENTER);
     }
 
-    public boolean checkSearchWord(String searchWord) {
+    public boolean checkWordInEachNameAndDescription(String word) {
         Matcher matcher;
-        Pattern pattern = Pattern.compile(searchWord.toLowerCase());
+        Pattern pattern = Pattern.compile(word.toLowerCase());
         List<WebElement> titles = Driver.getWebDriver().findElements(By.xpath(TITLES_XPATH));
         for (int i = 0; i < titles.size(); i++) {
             matcher = pattern.matcher(Driver.findElementGetText(String.format(TITLE_NAME_XPATH, (i + 1))).toLowerCase());

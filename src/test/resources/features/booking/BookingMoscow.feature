@@ -1,9 +1,8 @@
 Feature: Finding hotels in Moscow
-Scenario: Finding hotel with minimal price in Moscow
+Scenario: Finding hotel with minimal budget in Moscow
 
 Given I go to booking.com
-Then I enter data to search
-And I enter adults and rooms amount by actions
-Then I filter hotels at the minimum price
-And I'm looking hotel with minimum price
-And I compare hotel's price and price in filters
+Then I set data for search
+Then I perform actions with data
+And I choose hotels from min budget
+And I compare price of hotel and price in filters

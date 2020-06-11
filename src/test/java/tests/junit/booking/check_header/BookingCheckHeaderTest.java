@@ -7,15 +7,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import settings.Config;
 import web_driver.Driver;
-import web_pages.booking.MainPage;
+import web_pages.booking.BookingPage;
 
 import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertTrue;
-
 public class BookingCheckHeaderTest {
+    static BookingPage bookingPage;
     static Properties properties;
     static String BOOKING_PATH = "src/test/resources/properties/booking.properties";
     private static final Logger LOGGER = LogManager.getLogger(BookingCheckHeaderTest.class);
@@ -25,24 +24,14 @@ public class BookingCheckHeaderTest {
         LOGGER.info("Start test");
         Driver.initDriver(Config.CHROME);
         properties = Driver.getProperties(BOOKING_PATH);
+        bookingPage = new BookingPage(Driver.getWebDriver());
     }
 
     @Test
-    public void checkHeadTest() throws InterruptedException {
-        MainPage.bookingLogIn(properties);
+    public void checkHeaderTest() throws InterruptedException {
+        bookingPage.signIn(properties);
         TimeUnit.SECONDS.sleep(3);
-        assertTrue(Driver.isDisplayed("//*[@class='header-wrapper']/img"));
-        assertTrue(Driver.isDisplayed("//*[@data-id='currency_selector']"));
-        assertTrue(Driver.isDisplayed("//*[@data-id='language_selector']"));
-        assertTrue(Driver.isDisplayed("//*[@data-id='notifications']"));
-        assertTrue(Driver.isDisplayed("//*[contains(@class,'uc_helpcenter')]"));
-        assertTrue(Driver.isDisplayed("//*[contains(@class,'uc_account logged')]"));
-        assertTrue(Driver.isDisplayed("//*[contains(@id,'current_account')]"));
-        assertTrue(Driver.isDisplayed("//*[contains(@data-ga-track,'accommodation')]"));
-        assertTrue(Driver.isDisplayed("//*[contains(@data-ga-track,'flights')]"));
-        assertTrue(Driver.isDisplayed("//*[contains(@data-ga-track,'cars')]"));
-        assertTrue(Driver.isDisplayed("//*[contains(@data-ga-track,'attractions')]"));
-        assertTrue(Driver.isDisplayed("//*[contains(@data-ga-track,'airport_taxis')]"));
+        bookingPage.checkHeader();
     }
 
     @AfterClass

@@ -79,12 +79,6 @@ public class Driver {
         return webDriver.get().findElement(By.xpath(xPath)).getAttribute(attribute);
     }
 
-    public static WebElement findElementClickReturn(String xPath) {
-        element = webDriver.get().findElement(By.xpath(xPath));
-        element.click();
-        return element;
-    }
-
     public static WebElement findElementReturn(String xPath) {
         element = webDriver.get().findElement(By.xpath(xPath));
         return element;
