@@ -25,7 +25,7 @@ public class WebServiceTest {
     private static final Logger LOGGER = LogManager.getLogger(WebServiceTest.class);
 
     @Before
-    public void beforeJunit() throws IOException {
+    public void before() throws IOException {
         LOGGER.info("Start test");
         gson = new Gson();
         getDataSteps = new GetDataSteps();
@@ -34,46 +34,56 @@ public class WebServiceTest {
 
     @Test
     public void allUsersTest() throws IOException, URISyntaxException {
-        Search search = GetDataSteps.getSearchData(gson, 0, paths);
-        RequiredValues result = getDataSteps.parseResponseToClass(gson, search);
-        RequiredValues condition = getDataSteps.getTestCondition(gson, paths, "ALL_USERS");
-        assertEquals(result.hashCode(), condition.hashCode());
+        LOGGER.debug("I check ALL_USERS names");
+        Search search = GetDataSteps.getDataForRequest(gson, 0, paths);
+        RequiredValues response = getDataSteps.getResponse(gson, search);
+        RequiredValues preliminary = getDataSteps.getDataForComparisonWithResponse(gson, paths, "ALL_USERS");
+        LOGGER.debug("I compare response and preliminary data");
+        assertEquals(response.hashCode(), preliminary.hashCode());
     }
 
     @Test
     public void partialShortTest() throws IOException, URISyntaxException {
-        Search search = GetDataSteps.getSearchData(gson, 1, paths);
-        RequiredValues result = getDataSteps.parseResponseToClass(gson, search);
-        RequiredValues condition = getDataSteps.getTestCondition(gson, paths, "PARTIAL_SHORT");
-        assertEquals(result.hashCode(), condition.hashCode());
+        LOGGER.debug("I check PARTIAL_SHORT names");
+        Search search = GetDataSteps.getDataForRequest(gson, 1, paths);
+        RequiredValues response = getDataSteps.getResponse(gson, search);
+        RequiredValues preliminary = getDataSteps.getDataForComparisonWithResponse(gson, paths, "PARTIAL_SHORT");
+        LOGGER.debug("I compare response and preliminary data");
+        assertEquals(response.hashCode(), preliminary.hashCode());
     }
 
     @Test
     public void fullShortTest() throws IOException, URISyntaxException {
-        Search search = GetDataSteps.getSearchData(gson, 2, paths);
-        RequiredValues result = getDataSteps.parseResponseToClass(gson, search);
-        RequiredValues condition = getDataSteps.getTestCondition(gson, paths, "FULL_SHORT");
-        assertEquals(result.hashCode(), condition.hashCode());
+        LOGGER.debug("I check FULL_SHORT names");
+        Search search = GetDataSteps.getDataForRequest(gson, 2, paths);
+        RequiredValues response = getDataSteps.getResponse(gson, search);
+        RequiredValues preliminary = getDataSteps.getDataForComparisonWithResponse(gson, paths, "FULL_SHORT");
+        LOGGER.debug("I compare response and preliminary data");
+        assertEquals(response.hashCode(), preliminary.hashCode());
     }
 
     @Test
     public void partialLongTest() throws IOException, URISyntaxException {
-        Search search = GetDataSteps.getSearchData(gson, 3, paths);
-        RequiredValues result = getDataSteps.parseResponseToClass(gson, search);
-        RequiredValues condition = getDataSteps.getTestCondition(gson, paths, "PARTIAL_LONG");
-        assertEquals(result.hashCode(), condition.hashCode());
+        LOGGER.debug("I check PARTIAL_LONG names");
+        Search search = GetDataSteps.getDataForRequest(gson, 3, paths);
+        RequiredValues response = getDataSteps.getResponse(gson, search);
+        RequiredValues preliminary = getDataSteps.getDataForComparisonWithResponse(gson, paths, "PARTIAL_LONG");
+        LOGGER.debug("I compare response and preliminary data");
+        assertEquals(response.hashCode(), preliminary.hashCode());
     }
 
     @Test
     public void fullLongTest() throws IOException, URISyntaxException {
-        Search search = GetDataSteps.getSearchData(gson, 4, paths);
-        RequiredValues result = getDataSteps.parseResponseToClass(gson, search);
-        RequiredValues condition = getDataSteps.getTestCondition(gson, paths, "FULL_LONG");
-        assertEquals(result.hashCode(), condition.hashCode());
+        LOGGER.debug("I check FULL_LONG names");
+        Search search = GetDataSteps.getDataForRequest(gson, 4, paths);
+        RequiredValues response = getDataSteps.getResponse(gson, search);
+        RequiredValues preliminary = getDataSteps.getDataForComparisonWithResponse(gson, paths, "FULL_LONG");
+        LOGGER.debug("I compare response and preliminary data");
+        assertEquals(response.hashCode(), preliminary.hashCode());
     }
 
     @After
-    public void afterJunit() {
+    public void after() {
         LOGGER.info("Finish test");
     }
 }

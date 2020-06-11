@@ -14,7 +14,6 @@ import web_driver.Driver;
 import web_pages.booking.BookingPage;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -26,79 +25,78 @@ public class BookingNewUser {
     Properties properties;
     static String BOOKING_PATH = "src/test/resources/properties/booking.properties";
     private static final String BOOKING_URL = "https://www.booking.com/";
+    private static final String YANDEX_URL = "https://mail.yandex.ru/";
+    private static final String CURRENT_ACCOUNT_XPATH = "//*[contains(@id,'current_account')]";
+    private static final String MY_DASHBOARD_XPATH = "//*[contains(@class,'mydashboard')]";
+    private static final String CONTAINS_SENDER_XPATH = "//*[contains(text(),'%s')]";
     private static final String SENDER = "booking.com";
-    private static final String CONFIRM = "//*[contains(text(),'Подтверждаю')]";
-    private static final String CURRENT_ACCOUNT = "//*[contains(@id,'current_account')]";
-    private static final String MY_DASHBOARD = "//*[contains(@class,'mydashboard')]";
-    private static final String CHECKER = "//*[@class='email-confirm-banner']";
+    private static final String CONFIRM_XPATH = "//*[contains(text(),'Подтверждаю')]";
+    private static final String CHECKER_XPATH = "//*[@class='email-confirm-banner']";
     private static final Logger LOGGER = LogManager.getLogger(BookingNewUser.class);
 
     @Before
-    public void preCondition() throws MalformedURLException {
+    public void preCondition() throws IOException, InterruptedException {
         LOGGER.info("Start test");
         Driver.initDriver(Config.CHROME);
+        MailSteps.trashMailGetNewMail();
         bookingPage = new BookingPage(Driver.getWebDriver());
     }
 
-    @Given("I go to trashmail.com")
-    public void iGoToTrashmailCom() {
-    }
-
-    @Then("I get new trash mail")
-    public void iGetNewTrashMail() throws IOException, InterruptedException {
-        MailSteps.trashMailGetNewMail();
-    }
-
-    @And("I go to booking.com")
+    @Given("I go to booking.com")
     public void iGoToBookingCom() {
         Driver.openUrl(BOOKING_URL);
     }
 
     @Then("I create new user")
-    public void iCreateNewUser() throws IOException, InterruptedException {
+    public void iCreateNewUser() throws InterruptedException, IOException {
         LOGGER.debug("I create new user");
         bookingPage.registration(properties, BOOKING_PATH);
-        TimeUnit.SECONDS.sleep(3);
+        TimeUnit.SECONDS.sleep(5);
     }
 
-    @And("I go to yandex.ru")
-    public void iGoToYandexRu() throws IOException, InterruptedException {
-        LOGGER.debug("I go to yandex.ru");
-        MailSteps.confirmLinkOnYandexMail(SENDER);
-    }
-
-    @Then("I confirm email")
-    public void iConfirmEmail() throws InterruptedException {
-        LOGGER.debug("I confirm email");
+    @And("I go to mail.yandex.ru")
+    public void iGoToMailYandexRu() throws InterruptedException, IOException {
+        LOGGER.debug("I go to mail.yandex.ru");
+        Driver.getWebDriver().get(YANDEX_URL);
+        TimeUnit.SECONDS.sleep(5);
         String currentHandle = Driver.getWebDriver().getWindowHandle();
-        Driver.findElementClick(CONFIRM);
+        TimeUnit.SECONDS.sleep(2);
+        if (!MailSteps.firstTime) {
+            Driver.findElementClick(String.format(CONTAINS_SENDER_XPATH, SENDER));
+        } else {
+            MailSteps.confirmLinkOnYandexMail(SENDER);
+        }
+        TimeUnit.SECONDS.sleep(5);
+        Driver.findElementClick(CONFIRM_XPATH);
+        TimeUnit.SECONDS.sleep(8);
         Set<String> handles = Driver.getWebDriver().getWindowHandles();
         for (String actual : handles) {
             if (actual.equalsIgnoreCase(currentHandle)) {
                 Driver.getWebDriver().switchTo().window(currentHandle);
             }
         }
-        TimeUnit.SECONDS.sleep(8);
     }
 
-    @And("I again go to booking.com")
+    @Then("I again go to booking.com")
     public void iAgainGoToBookingCom() throws InterruptedException {
         LOGGER.debug("I again go to booking.com");
-        Driver.openUrl(BOOKING_URL);
-        TimeUnit.SECONDS.sleep(2);
+        Driver.getWebDriver().get(BOOKING_URL);
+        TimeUnit.SECONDS.sleep(3);
     }
 
-    @Then("I go to my dashboard")
-    public void iGoToMyDashBoard() {
+    @And("I go to my dashboard")
+    public void iGoToMyDashBoard() throws InterruptedException {
         LOGGER.debug("I go to my dashboard");
-        Driver.findElementClick(CURRENT_ACCOUNT);
-        Driver.findElementClick(MY_DASHBOARD);
+        Driver.findElementClick(CURRENT_ACCOUNT_XPATH);
+        TimeUnit.SECONDS.sleep(3);
+        Driver.findElementClick(MY_DASHBOARD_XPATH);
+        TimeUnit.SECONDS.sleep(3);
     }
 
     @And("I check lack of banner")
-    public void iCheckTheLackOfABanner() {
+    public void iCheckLackOfBanner() {
         LOGGER.debug("I check lack of banner");
-        assertEquals(Driver.getWebDriver().findElements(By.xpath(CHECKER)).size(), 0);
+        assertEquals(Driver.getWebDriver().findElements(By.xpath(CHECKER_XPATH)).size(), 0);
     }
 
     @After

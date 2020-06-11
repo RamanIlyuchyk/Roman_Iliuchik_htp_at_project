@@ -17,7 +17,7 @@ public class ParserRunner {
         parser.parseJackson();
         parser.fromGSON();
         MyHttpClient httpClient = new MyHttpClient();
-        Search search = new Search("berta", true);
-        httpClient.search(search);
+        Search searchData = new Search("berta", true);
+        httpClient.search(searchData);
     }
 }

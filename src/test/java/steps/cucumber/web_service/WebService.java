@@ -26,8 +26,8 @@ public class WebService {
     static Gson gson;
     static Properties paths;
     static Search search;
-    static RequiredValues condition;
-    static RequiredValues result;
+    static RequiredValues response;
+    static RequiredValues preliminary;
     static String WEB_SERVICE_CONDITIONS = "src/test/resources/properties/webPaths.properties";
     private static final Logger LOGGER = LogManager.getLogger(WebService.class);
 
@@ -39,24 +39,25 @@ public class WebService {
         paths = Driver.getProperties(WEB_SERVICE_CONDITIONS);
     }
 
-    @Given("I start finding by {int} predicate")
-    public void iStartFindingByPredicate(Integer int1) throws IOException {
-        search = GetDataSteps.getSearchData(gson, int1, paths);
+    @Given("I search by {int} condition")
+    public void iSearchByCondition(Integer condition) throws IOException {
+        search = GetDataSteps.getDataForRequest(gson, condition, paths);
     }
 
-    @When("I get a response from a web service")
-    public void iGetAResponseFromAWebService() throws IOException, URISyntaxException {
-        result = getDataSteps.parseResponseToClass(gson, search);
+    @When("I get response")
+    public void iGetResponse() throws IOException, URISyntaxException {
+        response = getDataSteps.getResponse(gson, search);
     }
 
-    @And("I form a known {string} result")
-    public void iFormAKnownResult(String string) throws FileNotFoundException {
-        condition = getDataSteps.getTestCondition(gson, paths, string);
+    @And("I get {string} names for comparison")
+    public void iGetDataForComparison(String data) throws FileNotFoundException {
+        preliminary = getDataSteps.getDataForComparisonWithResponse(gson, paths, data);
     }
 
-    @Then("I validate the web service response")
-    public void iValidateTheWebServiceResponse() {
-        assertEquals(result.hashCode(), condition.hashCode());
+    @Then("I compare response and preliminary data")
+    public void iCompareResponseAndPreliminaryData() {
+        LOGGER.debug("I compare response and preliminary data");
+        assertEquals(response.hashCode(), preliminary.hashCode());
     }
 
     @After

@@ -20,13 +20,12 @@ public class HttpRequestSteps {
     private static final Logger LOGGER = LogManager.getLogger(HttpRequestSteps.class);
 
     public static String getHttpResponse(Gson gson, Search search) throws IOException, URISyntaxException {
-        LOGGER.debug("Send predicate on the web service");
+        LOGGER.debug("I get response");
         HttpClient client = HttpClientBuilder.create().build();
         URIBuilder builder = new URIBuilder(URL);
         HttpPost request = new HttpPost(builder.build());
         request.setEntity(new StringEntity(gson.toJson(search)));
         HttpResponse response = client.execute(request);
-        LOGGER.debug("Reply is receiving");
         return EntityUtils.toString(response.getEntity());
     }
 }

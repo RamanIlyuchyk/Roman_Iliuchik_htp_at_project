@@ -172,7 +172,7 @@ public class BookingPage {
     }
 
     public void assertForParis(int daysAmount) {
-        LOGGER.debug("Assert hotels in Paris trip");
+        LOGGER.debug("Check hotels in Paris trip");
         String maxBudget = maxIntervalOfBudget.getText().replaceAll("\\D+", "");
         String firstPrice = firstHotelInList.getText().replaceAll("\\D+", "");
         int firstOneNightPrice = Integer.parseInt(firstPrice) / daysAmount;
@@ -198,7 +198,7 @@ public class BookingPage {
     }
 
     public void assertForMoscow(int daysAmount) throws InterruptedException {
-        LOGGER.debug("Assert hotels in Moscow trip");
+        LOGGER.debug("Check hotels in Moscow trip");
         element = Driver.findElementReturn(MIN_INTERVAL_OF_BUDGET_XPATH);
         String minBudget = element.getText();
         minBudget = minBudget.substring(minBudget.indexOf("-")).replaceAll("\\D+", "");

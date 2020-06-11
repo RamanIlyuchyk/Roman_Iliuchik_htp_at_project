@@ -1,8 +1,9 @@
 package web_pages.trash_mail;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import steps.trashmail_yandex.MailSteps;
@@ -12,7 +13,8 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
-public class MainPageWithFindBy {
+public class TrashMailPage {
+    static String TRASHMAIL_PATH = "src/test/resources/properties/trashMail.properties";
     @FindBy(xpath = "//*[@id='fe-mob-fwd-nb']")
     private static WebElement forwards;
     @FindBy(xpath = "//*[@id='fe-mob-fwd-nb']/option[contains(text(),'1')]")
@@ -35,16 +37,14 @@ public class MainPageWithFindBy {
     private static WebElement register;
     @FindBy(xpath = "//*[contains(@href,'trashmail')]")
     private static WebElement confirmButton;
+    private static final Logger LOGGER = LogManager.getLogger(TrashMailPage.class);
 
-    static String TRASHMAIL_PATH = "src/test/resources/properties/trashMail.properties";
-    protected Actions action;
-
-    public MainPageWithFindBy(WebDriver driver) {
+    public TrashMailPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
-        this.action = new Actions(driver);
     }
 
-    public static void generateMail(WebDriver driver) {
+    public void generateMail() {
+        LOGGER.debug("Creating trash email on 1 day");
         forwards.click();
         setForwards.click();
         life.click();
@@ -52,11 +52,14 @@ public class MainPageWithFindBy {
         create.click();
     }
 
-    public static void trashmailRegistration(WebDriver driver) throws InterruptedException, IOException {
+    public void trashmailRegistration() throws InterruptedException, IOException {
+        LOGGER.debug("Registration on trashmail.com");
         Properties prop = Driver.getProperties(TRASHMAIL_PATH);
         newUser.click();
         TimeUnit.SECONDS.sleep(1);
+        LOGGER.debug("Printing login");
         setLogin.sendKeys(prop.getProperty("LOGIN"));
+        LOGGER.debug("Printing password twice");
         setPassword.sendKeys(prop.getProperty("PASSWORD"));
         setPasswordAgain.sendKeys(prop.getProperty("PASSWORD"));
         register.click();

@@ -15,40 +15,30 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SilverScreenPage {
-    @FindBy(xpath = "(//*[name()='svg' and @id='svg-icon-search'])[1]")
-    private WebElement searchButton;
-
-    @FindBy(xpath = "//*[@id='root']//descendant::input[@placeholder='Поиск']")
-    private WebElement searchField;
-
-    @FindBy(xpath = "//*[contains(text(),'привилегии')]")
-    private WebElement logIn;
-
-    @FindBy(xpath = "//*[@type='email']")
-    private WebElement emailField;
-
-    @FindBy(xpath = "//*[@type='password']")
-    private WebElement passwordField;
-
-    @FindBy(xpath = "//*[contains(text(),'Войти')]")
-    private WebElement enterButton;
-
-    @FindBy(xpath = "(//*[@id='root']//descendant::span[contains(.,'уровень: ')])[1]")
-    private WebElement level;
-
-    @FindBy(xpath = "//*[@id='root']//descendant::span[contains(.,'Выйти')]")
-    private WebElement logOut;
-
-    @FindBy(xpath = "//*[@id='root']/div[2]/div/div[1]/div[1]/div[3]/span")
-    private WebElement description;
-
-    @FindBy(xpath = "//span[contains(text(),'Пользователь не найден')]")
-    private WebElement bannerForUnregistered;
-
     protected Actions action;
     private static final String TITLES_XPATH = "//*[@poster]/../div/a/span";
     private static final String TITLE_NAME_XPATH = "(//*[@poster]/../div/a/span)[%s]";
     private static final String BANNER_FOR_BLANK_FIELD_XPATH = "//div[contains(text(),'%s')]";
+    @FindBy(xpath = "(//*[name()='svg' and @id='svg-icon-search'])[1]")
+    private WebElement searchButton;
+    @FindBy(xpath = "//*[@id='root']//descendant::input[@placeholder='Поиск']")
+    private WebElement searchField;
+    @FindBy(xpath = "//*[contains(text(),'привилегии')]")
+    private WebElement logIn;
+    @FindBy(xpath = "//*[@type='email']")
+    private WebElement emailField;
+    @FindBy(xpath = "//*[@type='password']")
+    private WebElement passwordField;
+    @FindBy(xpath = "//*[contains(text(),'Войти')]")
+    private WebElement enterButton;
+    @FindBy(xpath = "(//*[@id='root']//descendant::span[contains(.,'уровень: ')])[1]")
+    private WebElement level;
+    @FindBy(xpath = "//*[@id='root']//descendant::span[contains(.,'Выйти')]")
+    private WebElement logOut;
+    @FindBy(xpath = "//*[@id='root']/div[2]/div/div[1]/div[1]/div[3]/span")
+    private WebElement description;
+    @FindBy(xpath = "//span[contains(text(),'Пользователь не найден')]")
+    private WebElement bannerForUnregistered;
 
     public SilverScreenPage(WebDriver driver) {
         PageFactory.initElements(driver, this);

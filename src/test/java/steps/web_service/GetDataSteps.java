@@ -16,19 +16,18 @@ import java.util.Properties;
 public class GetDataSteps {
     private static final Logger LOGGER = LogManager.getLogger(GetDataSteps.class);
 
-    public static Search getSearchData(Gson gson, int condition, Properties paths) throws FileNotFoundException {
-        LOGGER.debug("Parsing predicate to .json");
+    public static Search getDataForRequest(Gson gson, int condition, Properties paths) throws FileNotFoundException {
+        LOGGER.debug("I get data for request");
         Search[] searchData = gson.fromJson(new JsonReader(new FileReader(paths.getProperty("JSON"))), Search[].class);
         return searchData[condition];
     }
 
-    public RequiredValues parseResponseToClass(Gson gson, Search search) throws IOException, URISyntaxException {
-        LOGGER.debug("Parsing response to class object");
+    public RequiredValues getResponse(Gson gson, Search search) throws IOException, URISyntaxException {
         return gson.fromJson(HttpRequestSteps.getHttpResponse(gson, search), RequiredValues.class);
     }
 
-    public RequiredValues getTestCondition(Gson gson, Properties paths, String condition) throws FileNotFoundException {
-        LOGGER.debug("Parsing .json with validation data to class");
+    public RequiredValues getDataForComparisonWithResponse(Gson gson, Properties paths, String condition) throws FileNotFoundException {
+        LOGGER.debug("I get data for comparison with response");
         return gson.fromJson(new JsonReader(new FileReader(paths.getProperty(condition))), RequiredValues.class);
     }
 }

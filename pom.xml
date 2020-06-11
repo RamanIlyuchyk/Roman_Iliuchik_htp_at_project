@@ -170,6 +170,12 @@
             <artifactId>java-client</artifactId>
             <version>7.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.30</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>

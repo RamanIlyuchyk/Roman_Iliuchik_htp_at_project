@@ -1,13 +1,13 @@
 Feature: Finding users
 Scenario Outline: Finding users by username
 
-Given I start finding by <index> predicate
-When I get a response from a web service
-And I form a known <resultName> result
-Then I validate the web service response
+Given I search by <order> condition
+When I get response
+And I get <condition> names for comparison
+Then I compare response and preliminary data
 
 Examples:
-| index | resultName      |
+| order | condition       |
 | 0     | "ALL_USERS"     |
 | 1     | "PARTIAL_SHORT" |
 | 2     | "FULL_SHORT"    |

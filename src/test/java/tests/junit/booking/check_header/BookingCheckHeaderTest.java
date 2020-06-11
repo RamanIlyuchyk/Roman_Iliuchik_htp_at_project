@@ -2,8 +2,8 @@ package tests.junit.booking.check_header;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import settings.Config;
 import web_driver.Driver;
@@ -19,8 +19,8 @@ public class BookingCheckHeaderTest {
     static String BOOKING_PATH = "src/test/resources/properties/booking.properties";
     private static final Logger LOGGER = LogManager.getLogger(BookingCheckHeaderTest.class);
 
-    @BeforeClass
-    public static void preCondition() throws IOException {
+    @Before
+    public void preCondition() throws IOException {
         LOGGER.info("Start test");
         Driver.initDriver(Config.CHROME);
         properties = Driver.getProperties(BOOKING_PATH);
@@ -34,8 +34,8 @@ public class BookingCheckHeaderTest {
         bookingPage.checkHeader();
     }
 
-    @AfterClass
-    public static void postCondition() {
+    @After
+    public void postCondition() {
         LOGGER.info("Finish test");
         Driver.destroy();
     }
