@@ -50,7 +50,7 @@ public class WebService {
     }
 
     @And("I get {string} names for comparison")
-    public void iGetDataForComparison(String data) throws FileNotFoundException {
+    public void iGetNamesForComparison(String data) throws FileNotFoundException {
         preliminary = getDataSteps.getDataForComparisonWithResponse(gson, paths, data);
     }
 
